@@ -9,7 +9,7 @@ export const weddingConfig = {
     nickname:   'Dinda',
     fullName:   'Dinda Intan Pratiwi',
     parents:    'Putri dari Bapak & Ibu',
-    photo:      '/images/bride.jpg',
+    photo:      '/images/pas-foto-dinda-2.png',
     instagram:  '@dindaip',
   },
   groom: {
@@ -17,7 +17,7 @@ export const weddingConfig = {
     nickname:   'Rikky',
     fullName:   'Rikky Arisendi',
     parents:    'Putra dari Bapak Sopandi & Ibu Yani Mulyani',
-    photo:      '/images/groom.jpg',
+    photo:      '/images/pas-foto-rikky-2.png',
     instagram:  '@rikkyarisendi',
   },
 

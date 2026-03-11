@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { weddingConfig } from '@/lib/config';
 import { WcBlob, WcLeaf, WcBranchRow, WcFlower } from '@/components/ui/WatercolorOrnaments';
+import { FloBot, FloTop, FloCtr, FloCrn, FloMid, FlorOne, FlorTwo, FlorThree, FlorFour, FlorFive, FlorSix, FlorSeven } from '@/components/ui/IlustrationBG';
 
 export default function OpeningGate() {
   const [phase, setPhase] = useState<'idle' | 'closing' | 'opening' | 'gone'>('idle');
@@ -37,15 +38,15 @@ export default function OpeningGate() {
             <div className="absolute -top-20 -left-20 pointer-events-none">
               <WcBlob size={380} color="var(--sage-pale)" opacity={0.5} rotate={-20} />
             </div>
-            <div className="absolute -bottom-10 left-10 pointer-events-none">
+            <div className="absolute -bottom-16 -left-10 pointer-events-none">
               <WcBlob size={280} color="var(--petal)" opacity={0.35} rotate={40} />
             </div>
             {/* Corner leaves */}
-            <div className="absolute top-8 left-8 pointer-events-none">
-              <WcLeaf size={55} color="var(--sage)" opacity={0.35} rotate={-40} />
+            <div className="absolute -top-8 md:-top-4 -left-10 md:-left-4 pointer-events-none transform scale-x-[-1]">
+              <FloTop size={280} opacity={0.6} rotate={40} />
             </div>
-            <div className="absolute bottom-16 right-6 pointer-events-none">
-              <WcLeaf size={45} color="var(--moss)" opacity={0.25} rotate={20} />
+            <div className="absolute bottom-28 right-6 pointer-events-none">
+              <FloBot size={320} opacity={1} />
             </div>
             {/* Overlay gelap saat idle */}
             <motion.div className="absolute inset-0"
@@ -64,14 +65,14 @@ export default function OpeningGate() {
             <div className="absolute -top-20 -right-20 pointer-events-none">
               <WcBlob size={380} color="var(--petal)" opacity={0.45} rotate={30} />
             </div>
-            <div className="absolute -bottom-10 right-10 pointer-events-none">
+            <div className="absolute -bottom-16 -right-10 pointer-events-none">
               <WcBlob size={260} color="var(--sage-pale)" opacity={0.4} rotate={-15} />
             </div>
-            <div className="absolute top-8 right-8 pointer-events-none">
-              <WcLeaf size={55} color="var(--sage)" opacity={0.35} rotate={40} />
+            <div className="absolute -right-6 md:-right-8 -top-8 md:-top-4 pointer-events-none">
+              <FloTop size={280} opacity={0.6} rotate={40} />
             </div>
-            <div className="absolute bottom-16 left-6 pointer-events-none">
-              <WcLeaf size={45} color="var(--moss)" opacity={0.25} rotate={-20} />
+            <div className="absolute bottom-28 left-6 pointer-events-none transform scale-x-[-1]">
+              <FloBot size={320} opacity={1} />
             </div>
             <motion.div className="absolute inset-0"
               style={{ background: 'rgba(44,62,45,0.28)' }}
