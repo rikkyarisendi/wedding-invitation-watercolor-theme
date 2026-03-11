@@ -43,7 +43,7 @@ export default function OpeningGate() {
             </div>
             {/* Corner leaves */}
             <div className="absolute -top-8 md:-top-4 -left-10 md:-left-4 pointer-events-none transform scale-x-[-1]">
-              <FloTop size={280} opacity={0.6} rotate={40} />
+              <FloTop size={280} opacity={0.6} />
             </div>
             <div className="absolute bottom-28 right-6 pointer-events-none">
               <FloBot size={320} opacity={1} />
@@ -69,7 +69,7 @@ export default function OpeningGate() {
               <WcBlob size={260} color="var(--sage-pale)" opacity={0.4} rotate={-15} />
             </div>
             <div className="absolute -right-6 md:-right-8 -top-8 md:-top-4 pointer-events-none">
-              <FloTop size={280} opacity={0.6} rotate={40} />
+              <FloTop size={280} opacity={0.6} />
             </div>
             <div className="absolute bottom-28 left-6 pointer-events-none transform scale-x-[-1]">
               <FloBot size={320} opacity={1} />
