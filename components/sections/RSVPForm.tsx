@@ -4,7 +4,8 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { formatDate } from '@/lib/utils';
 import { weddingConfig } from '@/lib/config';
-import { WcBlob, WcFlower, WcBranchRow, WcBrushStroke, WcLeaf } from '@/components/ui/WatercolorOrnaments';
+import { WcBranchRow, WcBrushStroke } from '@/components/ui/WatercolorOrnaments';
+import { FloCrn, FlorOne, FlorFive, FlorSeven } from '@/components/ui/IlustrationBG';
 
 export default function RSVPForm() {
   const titleRef    = useRef(null);
@@ -12,8 +13,8 @@ export default function RSVPForm() {
   const formRef     = useRef(null);
   const formInView  = useInView(formRef, { once: true, margin: '-40px' });
 
-  const [form, setForm]         = useState({ name: '', phone: '', attendance: 'attend', guests: 1, message: '' });
-  const [loading, setLoading]   = useState(false);
+  const [form, setForm]           = useState({ name: '', phone: '', attendance: 'attend', guests: 1, message: '' });
+  const [loading, setLoading]     = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const set = (k: string, v: any) => setForm((p) => ({ ...p, [k]: v }));
 
@@ -22,7 +23,7 @@ export default function RSVPForm() {
     setLoading(true);
     try {
       const res = await fetch('/api/rsvp', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) });
-      if (res.ok) { setSubmitted(true); toast.success('Konfirmasi terkirim! 🌿'); }
+      if (res.ok) { setSubmitted(true); toast.success('Konfirmasi terkirim!'); }
       else toast.error('Gagal mengirim, coba lagi.');
     } catch { toast.error('Terjadi kesalahan.'); }
     finally { setLoading(false); }
@@ -42,14 +43,30 @@ export default function RSVPForm() {
 
   return (
     <section id="rsvp" className="section-pad relative overflow-hidden">
-      <div className="absolute -top-20 -left-20 pointer-events-none">
-        <WcBlob size={420} color="var(--petal)" opacity={0.3} rotate={15} />
+
+      {/* Corner PNG */}
+      <div className="absolute -top-8 -left-8 pointer-events-none opacity-50">
+        <FlorOne
+          style={{ width: 'clamp(90px, 12vw, 180px)', aspectRatio: '1/1', height: 'auto' }}
+          rotate={15}
+        />
       </div>
+      <div className="absolute -bottom-8 -right-8 pointer-events-none opacity-45">
+        <FlorFive
+          flip
+          style={{ width: 'clamp(90px, 12vw, 180px)', aspectRatio: '1/1', height: 'auto' }}
+          rotate={-15}
+        />
+      </div>
+
       <div className="max-w-2xl mx-auto relative">
         <motion.div ref={titleRef} className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }} animate={titleInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}>
-          <WcFlower size={42} color="var(--sage)" opacity={0.85} />
+          <FloCrn
+            style={{ width: 'clamp(36px, 5vw, 52px)', aspectRatio: '1/1', height: 'auto', margin: '0 auto' }}
+            opacity={0.85}
+          />
           <p className="text-xs tracking-[0.35em] uppercase mt-4 mb-2"
             style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-sans)' }}>
             Mohon konfirmasi sebelum {formatDate(weddingConfig.event.reception.date)}
@@ -58,7 +75,9 @@ export default function RSVPForm() {
             style={{ fontFamily: 'var(--font-script)', fontSize: 'clamp(2.8rem, 7vw, 4.5rem)' }}>
             RSVP
           </h2>
-          <div className="flex justify-center mt-3"><WcBranchRow width={240} color="var(--sage)" /></div>
+          <div className="flex justify-center mt-3">
+            <WcBranchRow width={240} color="var(--sage)" />
+          </div>
         </motion.div>
 
         <AnimatePresence mode="wait">
@@ -67,13 +86,20 @@ export default function RSVPForm() {
               initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }} transition={{ duration: 0.8, type: 'spring' }}
               className="wc-card p-14 text-center relative overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
-                <WcBlob size={400} color="var(--sage-pale)" opacity={1} />
+              {/* Corner flower success */}
+              <div className="absolute top-3 right-3 opacity-30 pointer-events-none">
+                <FlorSeven
+                  style={{ width: 'clamp(32px, 4vw, 52px)', aspectRatio: '1/1', height: 'auto' }}
+                  rotate={20}
+                />
               </div>
               <div className="relative">
                 <motion.div className="flex justify-center mb-4"
                   animate={{ rotate: 360 }} transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}>
-                  <WcFlower size={56} color="var(--sage)" opacity={0.9} />
+                  <FloCrn
+                    style={{ width: 'clamp(44px, 6vw, 64px)', aspectRatio: '1/1', height: 'auto', margin: '0 auto' }}
+                    opacity={0.9}
+                  />
                 </motion.div>
                 <h3 className="text-3xl mb-3" style={{ fontFamily: 'var(--font-script)', color: 'var(--moss-dark)' }}>
                   Terima Kasih!
@@ -88,11 +114,13 @@ export default function RSVPForm() {
             <motion.div key="form" ref={formRef} className="wc-card p-8 relative overflow-hidden"
               initial={{ opacity: 0, y: 40 }} animate={formInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
-              <div className="absolute top-3 right-3 opacity-20">
-                <WcLeaf size={36} color="var(--sage)" opacity={1} rotate={25} />
-              </div>
-              <div className="absolute -bottom-6 -left-6 pointer-events-none opacity-20">
-                <WcBlob size={160} color="var(--sage-pale)" opacity={1} />
+
+              {/* Corner flower form */}
+              <div className="absolute top-3 right-3 opacity-25 pointer-events-none">
+                <FlorSeven
+                  style={{ width: 'clamp(28px, 3.5vw, 44px)', aspectRatio: '1/1', height: 'auto' }}
+                  rotate={25}
+                />
               </div>
 
               <div className="relative space-y-6">

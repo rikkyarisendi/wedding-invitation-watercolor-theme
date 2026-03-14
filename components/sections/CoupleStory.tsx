@@ -2,7 +2,8 @@
 import { useRef } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { weddingConfig } from '@/lib/config';
-import { WcBlob, WcLeaf, WcFlower, WcBranchRow, WcBrushStroke } from '@/components/ui/WatercolorOrnaments';
+import { WcBranchRow, WcBrushStroke } from '@/components/ui/WatercolorOrnaments';
+import { FloCrn, FlorOne, FlorTwo, FlorThree, FlorFour } from '@/components/ui/IlustrationBG';
 
 function TimelineItem({ item, index }: { item: typeof weddingConfig.story[0]; index: number }) {
   const ref    = useRef(null);
@@ -18,14 +19,12 @@ function TimelineItem({ item, index }: { item: typeof weddingConfig.story[0]; in
     >
       <div className={`flex-1 ${isLeft ? 'text-right' : 'text-left'} md:max-w-[42%]`}>
         <div className="wc-card p-6 relative overflow-hidden group">
-          {/* Card blob bg */}
-          <div className="absolute inset-0 pointer-events-none opacity-25"
-            style={{ transform: isLeft ? 'translate(-20%,-20%)' : 'translate(20%,-20%)' }}>
-            <WcBlob size={200} color="var(--sage-pale)" opacity={1} />
-          </div>
-          {/* Corner leaf */}
-          <div className={`absolute top-2 ${isLeft ? 'right-2' : 'left-2'} opacity-30`}>
-            <WcLeaf size={20} color="var(--sage)" opacity={1} rotate={isLeft ? 30 : -30} />
+          {/* Corner flower aksen */}
+          <div className={`absolute top-2 ${isLeft ? 'right-2' : 'left-2'} opacity-40 pointer-events-none`}>
+            <FlorFour
+              style={{ width: 'clamp(28px, 4vw, 44px)', aspectRatio: '1/1', height: 'auto' }}
+              rotate={isLeft ? 30 : -30}
+            />
           </div>
           <div className="relative">
             <p className="text-xs tracking-[0.2em] uppercase mb-1"
@@ -78,9 +77,19 @@ export default function CoupleStory() {
     <section id="story" ref={sectionRef} className="section-pad relative overflow-hidden"
       style={{ background: 'var(--bg-2)' }}>
 
-      {/* Background blobs */}
-      <div className="absolute top-0 right-0 pointer-events-none opacity-50" style={{ transform: 'translate(30%,-20%)' }}>
-        <WcBlob size={500} color="var(--sage-pale)" opacity={0.5} rotate={10} />
+      {/* Corner PNG */}
+      <div className="absolute top-0 right-0 pointer-events-none opacity-60">
+        <FlorOne
+          style={{ width: 'clamp(120px, 18vw, 260px)', aspectRatio: '1/1', height: 'auto' }}
+          rotate={10}
+        />
+      </div>
+      <div className="absolute bottom-0 left-0 pointer-events-none opacity-50">
+        <FlorTwo
+          flip
+          style={{ width: 'clamp(100px, 15vw, 220px)', aspectRatio: '1/1', height: 'auto' }}
+          rotate={-15}
+        />
       </div>
 
       <div className="max-w-4xl mx-auto relative">
@@ -89,7 +98,10 @@ export default function CoupleStory() {
           initial={{ opacity: 0, y: 30 }}
           animate={titleInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}>
-          <WcFlower size={48} color="var(--sage)" opacity={0.8} />
+          <FloCrn
+            style={{ width: 'clamp(40px, 6vw, 64px)', aspectRatio: '1/1', height: 'auto', margin: '0 auto' }}
+            opacity={0.85}
+          />
           <p className="text-xs tracking-[0.35em] uppercase mt-4 mb-2"
             style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-sans)' }}>
             Perjalanan Cinta Kami
@@ -105,7 +117,6 @@ export default function CoupleStory() {
 
         {/* Timeline */}
         <div className="relative">
-          {/* Animated line */}
           <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 hidden md:block overflow-hidden"
             style={{ background: 'var(--sage-pale)' }}>
             <motion.div className="w-full origin-top" style={{ height: lineH, background: 'var(--sage-light)' }} />

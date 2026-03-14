@@ -3,7 +3,8 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { Heart } from 'lucide-react';
-import { WcBlob, WcFlower, WcBranchRow, WcBrushStroke, WcLeaf } from '@/components/ui/WatercolorOrnaments';
+import { WcBranchRow, WcBrushStroke } from '@/components/ui/WatercolorOrnaments';
+import { FloCrn, FlorTwo, FlorThree, FlorSix } from '@/components/ui/IlustrationBG';
 
 interface Wish { id: string; name: string; message: string; createdAt: string; }
 
@@ -25,7 +26,7 @@ export default function Wishes() {
     setLoading(true);
     try {
       const res = await fetch('/api/wishes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) });
-      if (res.ok) { setForm({ name: '', message: '' }); toast.success('Ucapan terkirim! 🌿'); fetchWishes(); }
+      if (res.ok) { setForm({ name: '', message: '' }); toast.success('Ucapan terkirim!'); fetchWishes(); }
       else toast.error('Gagal mengirim.');
     } catch { toast.error('Terjadi kesalahan.'); }
     finally { setLoading(false); }
@@ -40,14 +41,30 @@ export default function Wishes() {
   return (
     <section id="wishes" className="section-pad relative overflow-hidden"
       style={{ background: 'var(--bg-2)' }}>
-      <div className="absolute -bottom-20 -right-20 pointer-events-none">
-        <WcBlob size={440} color="var(--sage-pale)" opacity={0.35} rotate={-15} />
+
+      {/* Corner PNG */}
+      <div className="absolute -bottom-8 -right-8 pointer-events-none opacity-50">
+        <FlorTwo
+          flip
+          style={{ width: 'clamp(90px, 12vw, 180px)', aspectRatio: '1/1', height: 'auto' }}
+          rotate={-15}
+        />
       </div>
+      <div className="absolute -top-8 -left-8 pointer-events-none opacity-45">
+        <FlorThree
+          style={{ width: 'clamp(90px, 12vw, 180px)', aspectRatio: '1/1', height: 'auto' }}
+          rotate={10}
+        />
+      </div>
+
       <div className="max-w-3xl mx-auto relative">
         <motion.div ref={titleRef} className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }} animate={titleInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}>
-          <WcFlower size={42} color="var(--sage)" opacity={0.85} />
+          <FloCrn
+            style={{ width: 'clamp(36px, 5vw, 52px)', aspectRatio: '1/1', height: 'auto', margin: '0 auto' }}
+            opacity={0.85}
+          />
           <p className="text-xs tracking-[0.35em] uppercase mt-4 mb-2"
             style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-sans)' }}>
             Kirimkan Doa Terbaik
@@ -56,15 +73,20 @@ export default function Wishes() {
             style={{ fontFamily: 'var(--font-script)', fontSize: 'clamp(2.8rem, 7vw, 4.5rem)' }}>
             Ucapan & Doa
           </h2>
-          <div className="flex justify-center mt-3"><WcBranchRow width={240} color="var(--sage)" /></div>
+          <div className="flex justify-center mt-3">
+            <WcBranchRow width={240} color="var(--sage)" />
+          </div>
         </motion.div>
 
         {/* Input */}
         <motion.div className="wc-card p-8 mb-8 relative overflow-hidden"
           initial={{ opacity: 0, y: 30 }} animate={titleInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9, delay: 0.2 }}>
-          <div className="absolute top-3 right-3 opacity-20">
-            <WcLeaf size={32} color="var(--sage)" opacity={1} rotate={20} />
+          <div className="absolute top-3 right-3 opacity-25 pointer-events-none">
+            <FlorSix
+              style={{ width: 'clamp(28px, 3.5vw, 44px)', aspectRatio: '1/1', height: 'auto' }}
+              rotate={20}
+            />
           </div>
           <div className="space-y-4">
             <input value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
@@ -97,9 +119,6 @@ export default function Wishes() {
                 animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
                 transition={{ delay: i * 0.04, duration: 0.6 }}
                 layout>
-                <div className="absolute -bottom-4 -right-4 pointer-events-none opacity-15">
-                  <WcBlob size={100} color="var(--sage-pale)" opacity={1} />
-                </div>
                 <div className="relative flex items-start gap-3 mb-2">
                   <motion.div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
                     style={{ background: 'var(--sage-pale)', color: 'var(--moss)', fontFamily: 'var(--font-sans)' }}

@@ -3,7 +3,20 @@ import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Copy, Check } from 'lucide-react';
 import { weddingConfig } from '@/lib/config';
-import { WcBlob, WcFlower, WcBranchRow, WcBrushStroke, WcLeaf } from '@/components/ui/WatercolorOrnaments';
+import { WcBranchRow, WcBrushStroke } from '@/components/ui/WatercolorOrnaments';
+import { FloTop, FloBot, FloCrn, FlorOne, FlorFour, FlorSeven } from '@/components/ui/IlustrationBG';
+
+function FloatingFlower({ children, delay = 0, className = '' }: {
+  children: React.ReactNode; delay?: number; className?: string;
+}) {
+  return (
+    <motion.div className={className}
+      animate={{ y:[0,-8,0], rotate:[-2,2,-2] }}
+      transition={{ duration:5+delay, repeat:Infinity, ease:'easeInOut', delay }}>
+      {children}
+    </motion.div>
+  );
+}
 
 export function DigitalEnvelope() {
   const titleRef    = useRef(null);
@@ -17,15 +30,21 @@ export function DigitalEnvelope() {
 
   return (
     <section className="section-pad relative overflow-hidden">
-      <div className="absolute -top-20 -right-20 pointer-events-none">
-        <WcBlob size={400} color="var(--petal)" opacity={0.3} rotate={10} />
+
+      {/* Corner PNG */}
+      <div className="absolute -top-8 -right-8 pointer-events-none opacity-50">
+        <FlorOne
+          style={{ width: 'clamp(90px, 12vw, 180px)', aspectRatio: '1/1', height: 'auto' }}
+          rotate={10}
+        />
       </div>
+
       <div className="max-w-2xl mx-auto relative">
         <motion.div ref={titleRef} className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }} animate={titleInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}>
           <motion.span className="text-4xl inline-block"
-            animate={{ y: [0,-8,0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}>
+            animate={{ y:[0,-8,0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}>
             💌
           </motion.span>
           <p className="text-xs tracking-[0.35em] uppercase mt-4 mb-2"
@@ -36,7 +55,9 @@ export function DigitalEnvelope() {
             style={{ fontFamily: 'var(--font-script)', fontSize: 'clamp(2.8rem, 7vw, 4.5rem)' }}>
             Amplop Digital
           </h2>
-          <div className="flex justify-center mt-3"><WcBranchRow width={240} color="var(--sage)" /></div>
+          <div className="flex justify-center mt-3">
+            <WcBranchRow width={240} color="var(--sage)" />
+          </div>
           <p className="mt-5 text-sm italic leading-relaxed"
             style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-body)', maxWidth: '400px', margin: '1.5rem auto 0' }}>
             Kehadiran dan doa restu Anda adalah hadiah terbaik bagi kami.
@@ -50,8 +71,11 @@ export function DigitalEnvelope() {
               animate={titleInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
               transition={{ delay: 0.1 + i * 0.12, duration: 0.8 }}
               whileHover={{ y: -3, transition: { duration: 0.3 } }}>
-              <div className="absolute -bottom-6 -left-6 pointer-events-none opacity-20">
-                <WcBlob size={140} color="var(--sage-pale)" opacity={1} />
+              <div className="absolute top-2 right-2 opacity-20 pointer-events-none">
+                <FlorFour
+                  style={{ width: 'clamp(24px, 3vw, 40px)', aspectRatio: '1/1', height: 'auto' }}
+                  rotate={15}
+                />
               </div>
               <div className="relative flex items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
@@ -110,23 +134,27 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden py-20 px-6 text-center"
       style={{ background: 'var(--bg-2)', borderTop: '1px solid var(--border)' }}>
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-20 left-1/2 -translate-x-1/2">
-          <WcBlob size={600} color="var(--sage-pale)" opacity={0.3} />
-        </div>
-        <div className="absolute bottom-0 left-0 opacity-20" style={{ transform: 'translate(-30%,20%)' }}>
-          <WcBlob size={300} color="var(--petal)" opacity={0.5} rotate={-20} />
-        </div>
-        <div className="absolute bottom-0 right-0 opacity-20" style={{ transform: 'translate(30%,20%)' }}>
-          <WcBlob size={280} color="var(--sage-pale)" opacity={0.5} rotate={15} />
-        </div>
-        {/* Corner leaves */}
-        <div className="absolute bottom-4 left-4 opacity-30">
-          <WcLeaf size={60} color="var(--sage)" opacity={1} rotate={-50} />
-        </div>
-        <div className="absolute bottom-4 right-4 opacity-30">
-          <WcLeaf size={60} color="var(--sage)" opacity={1} rotate={50} />
-        </div>
+
+      {/* Corner PNG flowers */}
+      <div className="absolute top-0 left-0 pointer-events-none opacity-45">
+        <FloatingFlower delay={0}>
+          <FloTop style={{ width: 'clamp(80px, 10vw, 160px)', aspectRatio: '1/1', height: 'auto' }} />
+        </FloatingFlower>
+      </div>
+      <div className="absolute top-0 right-0 pointer-events-none opacity-45">
+        <FloatingFlower delay={0.8}>
+          <FloTop flip style={{ width: 'clamp(80px, 10vw, 160px)', aspectRatio: '1/1', height: 'auto' }} />
+        </FloatingFlower>
+      </div>
+      <div className="absolute bottom-0 left-0 pointer-events-none opacity-40">
+        <FloatingFlower delay={1.2}>
+          <FloBot style={{ width: 'clamp(70px, 9vw, 140px)', aspectRatio: '1/1', height: 'auto' }} />
+        </FloatingFlower>
+      </div>
+      <div className="absolute bottom-0 right-0 pointer-events-none opacity-40">
+        <FloatingFlower delay={0.4}>
+          <FloBot flip style={{ width: 'clamp(70px, 9vw, 140px)', aspectRatio: '1/1', height: 'auto' }} />
+        </FloatingFlower>
       </div>
 
       <motion.div ref={ref} className="relative z-10"
@@ -135,7 +163,10 @@ export function Footer() {
 
         <motion.div className="flex justify-center mb-6"
           animate={{ rotate: 360 }} transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}>
-          <WcFlower size={52} color="var(--sage)" opacity={0.9} />
+          <FloCrn
+            style={{ width: 'clamp(40px, 6vw, 60px)', aspectRatio: '1/1', height: 'auto', margin: '0 auto' }}
+            opacity={0.9}
+          />
         </motion.div>
 
         <p className="text-xs tracking-[0.4em] uppercase mb-4"

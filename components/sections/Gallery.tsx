@@ -6,7 +6,8 @@ import Image from 'next/image';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 import { weddingConfig } from '@/lib/config';
-import { WcBlob, WcFlower, WcBranchRow } from '@/components/ui/WatercolorOrnaments';
+import { WcBranchRow } from '@/components/ui/WatercolorOrnaments';
+import { FloCrn, FlorOne, FlorTwo } from '@/components/ui/IlustrationBG';
 
 export function Gallery() {
   const titleRef    = useRef(null);
@@ -19,13 +20,13 @@ export function Gallery() {
     <section id="gallery" className="section-pad relative overflow-hidden"
       style={{ background: 'var(--bg-2)' }}>
       <div className="absolute top-0 right-0 pointer-events-none opacity-60" style={{ transform: 'translate(20%,-10%)' }}>
-        <WcBlob size={420} color="var(--sage-pale)" opacity={0.4} rotate={15} />
+        <FlorOne style={{ width: 'clamp(100px, 14vw, 200px)', aspectRatio: '1/1', height: 'auto' }} opacity={0.4} rotate={15} />
       </div>
       <div className="max-w-6xl mx-auto relative">
         <motion.div ref={titleRef} className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }} animate={titleInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}>
-          <WcFlower size={42} color="var(--sage)" opacity={0.85} />
+          <FloCrn style={{ width: 'clamp(36px, 5vw, 52px)', aspectRatio: '1/1', height: 'auto', margin: '0 auto' }} opacity={0.85} />
           <p className="text-xs tracking-[0.35em] uppercase mt-4 mb-2"
             style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-sans)' }}>
             Momen Berharga

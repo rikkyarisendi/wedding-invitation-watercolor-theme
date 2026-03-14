@@ -10,25 +10,25 @@
   --font-body:    'Lora', Georgia, serif;
   --font-sans:    'Jost', sans-serif;
 
-  /* Watercolor pastel green palette */
-  --bg:           #f4f8f4;
-  --bg-2:         #eaf2eb;
-  --bg-warm:      #f8f6f0;
-  --sage:         #7a9e7e;
-  --sage-light:   #a8c5ab;
-  --sage-pale:    #d4e8d5;
-  --sage-mist:    #eef5ee;
-  --moss:         #4a7c59;
-  --moss-dark:    #2d5a3d;
-  --petal:        #c5dfc7;
-  --cream:        #f8f6f0;
-  --blush:        #e8d5c4;
-  --text:         #2c3e2d;
-  --text-muted:   #6b8c6e;
-  --text-light:   #9ab89d;
-  --border:       rgba(122,158,126,0.25);
-  --border-soft:  rgba(122,158,126,0.15);
-  --shadow-green: rgba(74,124,89,0.12);
+  /* Olive green palette */
+  --bg: #f5f4ee;
+  --bg-2: #eeebdf;
+  --bg-warm: #f7f5ed;
+  --sage: #7a8c2a;
+  --sage-light: #a3b048;
+  --sage-pale: #d6dc9e;
+  --sage-mist: #f0f2dc;
+  --moss: #5a6b18;
+  --moss-dark: #3a4a0a;
+  --petal: #f0c8d8;
+  --cream: #f7f5ed;
+  --blush: #e8c8d4;
+  --text: #2e3010;
+  --text-muted: #7a8040;
+  --text-light: #a8b060;
+  --border: rgba(90, 107, 24, 0.22);
+  --border-soft: rgba(90, 107, 24, 0.12);
+  --shadow-green: rgba(58, 74, 10, 0.12);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

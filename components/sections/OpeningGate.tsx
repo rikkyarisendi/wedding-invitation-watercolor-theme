@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { weddingConfig } from '@/lib/config';
 import { WcBlob, WcLeaf, WcBranchRow, WcFlower, WcSplatter, WcBrushStroke } from '@/components/ui/WatercolorOrnaments';
-import { FloTop, FloBot } from '@/components/ui/IlustrationBG';
+import { FloBot, FloTop, FloCtr, FloCrn, FloMid, FlorOne, FlorTwo, FlorThree, FlorFour, FlorFive, FlorSix, FlorSeven } from '@/components/ui/IlustrationBG';
 
 type Phase = 'idle' | 'seal-break' | 'flap-open' | 'card-rise' | 'card-expand' | 'gone';
 
@@ -79,21 +79,21 @@ function WaxStamp({ phase, onClick }: { phase: Phase; onClick: () => void }) {
       >
         <svg width="82" height="82" viewBox="0 0 82 82" fill="none">
           <defs>
-            {/* Gradient utama lilin — dari terang ke gelap */}
+            {/* Gradient utama lilin — gold/emas cocok dengan olive */}
             <radialGradient id="waxMain" cx="38%" cy="32%" r="65%">
-              <stop offset="0%"   stopColor="#e8924a"/>
-              <stop offset="45%"  stopColor="#c46830"/>
-              <stop offset="100%" stopColor="#8a3a10"/>
+              <stop offset="0%"   stopColor="#f0c84a"/>
+              <stop offset="45%"  stopColor="#c8980a"/>
+              <stop offset="100%" stopColor="#8a6200"/>
             </radialGradient>
-            {/* Gradient shadow bawah — efek ketebalan lilin */}
+            {/* Gradient shadow bawah */}
             <radialGradient id="waxDepth" cx="50%" cy="85%" r="55%">
-              <stop offset="0%"   stopColor="#5a1e05" stopOpacity="0.45"/>
-              <stop offset="100%" stopColor="#5a1e05" stopOpacity="0"/>
+              <stop offset="0%"   stopColor="#4a3000" stopOpacity="0.5"/>
+              <stop offset="100%" stopColor="#4a3000" stopOpacity="0"/>
             </radialGradient>
-            {/* Highlight */}
+            {/* Highlight gold */}
             <radialGradient id="waxHi" cx="32%" cy="25%" r="40%">
-              <stop offset="0%"   stopColor="#f8c890" stopOpacity="0.55"/>
-              <stop offset="100%" stopColor="#f8c890" stopOpacity="0"/>
+              <stop offset="0%"   stopColor="#fff8d0" stopOpacity="0.65"/>
+              <stop offset="100%" stopColor="#fff8d0" stopOpacity="0"/>
             </radialGradient>
             {/* Noise texture untuk permukaan lilin */}
             <filter id="waxNoise" x="-5%" y="-5%" width="110%" height="110%">
@@ -151,7 +151,7 @@ function WaxStamp({ phase, onClick }: { phase: Phase; onClick: () => void }) {
             C66 14 73 23 74 33
             C75 43 72 55 65 63
             C59 70 49 74.5 41 75 Z"
-            fill="rgba(120,55,15,0.18)"
+            fill="rgba(100,70,0,0.18)"
             filter="url(#waxNoise)"
           />
 
@@ -169,9 +169,9 @@ function WaxStamp({ phase, onClick }: { phase: Phase; onClick: () => void }) {
           />
 
           {/* ── Tetesan lilin kecil di tepi ── memberi kesan meleleh */}
-          <ellipse cx="14" cy="52" rx="4" ry="6" fill="#b85e25" opacity="0.7" transform="rotate(-20 14 52)"/>
-          <ellipse cx="68" cy="48" rx="3" ry="5" fill="#a85020" opacity="0.65" transform="rotate(15 68 48)"/>
-          <ellipse cx="36" cy="76" rx="5" ry="3.5" fill="#b05522" opacity="0.6" transform="rotate(5 36 76)"/>
+          <ellipse cx="14" cy="52" rx="4" ry="6" fill="#b88a00" opacity="0.7" transform="rotate(-20 14 52)"/>
+          <ellipse cx="68" cy="48" rx="3" ry="5" fill="#a07800" opacity="0.65" transform="rotate(15 68 48)"/>
+          <ellipse cx="36" cy="76" rx="5" ry="3.5" fill="#c09200" opacity="0.6" transform="rotate(5 36 76)"/>
 
           {/* ── Emboss ring dalam ── */}
           <circle cx="41" cy="41" r="26" fill="none" stroke="rgba(90,30,5,0.3)" strokeWidth="1.2"/>
@@ -202,12 +202,12 @@ function WaxStamp({ phase, onClick }: { phase: Phase; onClick: () => void }) {
       {isIdle && (
         <>
           <motion.div className="absolute inset-0 rounded-full pointer-events-none"
-            style={{ border: '1.5px solid rgba(196,104,48,0.4)' }}
+            style={{ border: '1.5px solid rgba(200,152,10,0.45)' }}
             animate={{ scale: [1, 1.55, 1], opacity: [0.5, 0, 0.5] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
           />
           <motion.div className="absolute inset-0 rounded-full pointer-events-none"
-            style={{ border: '1px solid rgba(196,104,48,0.25)' }}
+            style={{ border: '1px solid rgba(200,152,10,0.28)' }}
             animate={{ scale: [1, 1.9, 1], opacity: [0.35, 0, 0.35] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
           />
@@ -294,27 +294,55 @@ export default function OpeningGate() {
             </div>
           </div>
 
-          {/* Corner top */}
+          {/* Corner top — FloTop dengan animasi melayang */}
           {[
-            { cls:'-top-24 md:-top-18 -left-24 md:-left-18',  flip: false, d:0.4 },
-            { cls:'-top-24 md:-top-18 -right-24 md:-right-18', flip: true,  d:0.5 },
+            {
+              pos: '-top-16 -left-16',
+              flip: false, delay: 0, floatDelay: 0,
+              // Edit ukuran per device di sini:
+              className: 'w-36 h-36 sm:w-44 sm:h-44 md:w-56 md:h-56 lg:w-64 lg:h-64',
+            },
+            {
+              pos: '-top-16 -right-16',
+              flip: true, delay: 0.1, floatDelay: 0.8,
+              // Edit ukuran per device di sini:
+              className: 'w-36 h-36 sm:w-44 sm:h-44 md:w-56 md:h-56 lg:w-64 lg:h-64',
+            },
           ].map((l, i) => (
-            <motion.div key={i} className={`absolute ${l.cls} pointer-events-none`}
+            <motion.div key={i} className={`absolute ${l.pos} pointer-events-none`}
               initial={{ opacity:0 }} animate={{ opacity:1 }}
-              transition={{ delay:l.d, duration:0.9 }}>
-              <FloTop size={320} opacity={0.75} flip={l.flip} />
+              transition={{ delay: 0.4 + l.delay, duration:0.9 }}>
+              <motion.div
+                animate={{ y:[0,-10,0], rotate: l.flip ? [3,-3,3] : [-3,3,-3] }}
+                transition={{ duration:5+i, repeat:Infinity, ease:'easeInOut', delay:l.floatDelay }}>
+                <FloTop opacity={0.82} flip={l.flip} className={l.className}/>
+              </motion.div>
             </motion.div>
           ))}
 
-          {/* Corner bottom */}
+          {/* Corner bottom — FloBot dengan animasi melayang */}
           {[
-            { cls:'bottom-5 left-5 md:left-64',  flip: false,  d:0.6 },
-            { cls:'bottom-5 right-5 md:right-64', flip: true, d:0.7 },
+            {
+              pos: '-bottom-16 -left-16',
+              flip: false, delay: 0.2, floatDelay: 1.2,
+              // Edit ukuran per device di sini:
+              className: 'w-32 h-32 sm:w-40 sm:h-40 md:w-52 md:h-52 lg:w-60 lg:h-60',
+            },
+            {
+              pos: '-bottom-16 -right-16',
+              flip: true, delay: 0.3, floatDelay: 0.4,
+              // Edit ukuran per device di sini:
+              className: 'w-32 h-32 sm:w-40 sm:h-40 md:w-52 md:h-52 lg:w-60 lg:h-60',
+            },
           ].map((l, i) => (
-            <motion.div key={i} className={`absolute ${l.cls} pointer-events-none`}
+            <motion.div key={i} className={`absolute ${l.pos} pointer-events-none`}
               initial={{ opacity:0 }} animate={{ opacity:1 }}
-              transition={{ delay:l.d, duration:0.9 }}>
-              <FloBot size={320} opacity={0.9} flip={l.flip} />
+              transition={{ delay: 0.6 + l.delay, duration:0.9 }}>
+              <motion.div
+                animate={{ y:[0,-8,0], rotate: l.flip ? [-2,2,-2] : [2,-2,2] }}
+                transition={{ duration:6+i, repeat:Infinity, ease:'easeInOut', delay:l.floatDelay }}>
+                <FloBot opacity={0.85} flip={l.flip} className={l.className}/>
+              </motion.div>
             </motion.div>
           ))}
 
@@ -499,37 +527,47 @@ export default function OpeningGate() {
                 )}
               </AnimatePresence>
 
+              {/* Shadow CSS oval */}
+              <div className="absolute inset-0 pointer-events-none" style={{
+                borderRadius: '9px',
+                boxShadow: '0 16px 40px rgba(8,14,2,0.4), 0 6px 16px rgba(8,14,2,0.2)',
+              }}/>
+
               {/* ── AMPLOP SVG BODY ── */}
               <svg className="absolute inset-0 pointer-events-none"
                 width={ENV_W} height={ENV_H}
                 viewBox={`0 0 ${ENV_W} ${ENV_H}`}
                 fill="none" style={{ zIndex:3, overflow:'visible' }}>
                 <defs>
-                  <filter id="es2"><feDropShadow dx="0" dy="10" stdDeviation="18" floodColor="rgba(44,62,45,0.17)"/></filter>
-                  <linearGradient id="eb2" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%"   stopColor="#f9f5ed"/>
-                    <stop offset="100%" stopColor="#ede4cf"/>
-                  </linearGradient>
-                  <linearGradient id="eside2" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%"   stopColor="#ddd0b4" stopOpacity="0.5"/>
-                    <stop offset="100%" stopColor="#e8ddca" stopOpacity="0.28"/>
-                  </linearGradient>
-                  <linearGradient id="ebot2" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%"   stopColor="#e5dbc4"/>
-                    <stop offset="100%" stopColor="#d3c6a8"/>
-                  </linearGradient>
+                  <clipPath id="envClip">
+                    <rect x="0" y="0" width={ENV_W} height={ENV_H} rx="9"/>
+                  </clipPath>
                 </defs>
-                <rect x="0" y="0" width={ENV_W} height={ENV_H} rx="9" fill="url(#eb2)" filter="url(#es2)"/>
-                {[55,105,155].map(y=>(
-                  <line key={y} x1="0" y1={y} x2={ENV_W} y2={y} stroke="rgba(165,140,90,0.055)" strokeWidth="0.5"/>
-                ))}
-                <rect x="0" y="0" width={ENV_W} height={ENV_H} rx="9" fill="none" stroke="rgba(175,150,95,0.24)" strokeWidth="1"/>
-                <path d={`M0 ${ENV_H} L${ENV_CX} ${ENV_H*0.65} L${ENV_W} ${ENV_H} Z`}
-                  fill="url(#ebot2)" stroke="rgba(165,140,90,0.18)" strokeWidth="0.8"/>
+
+                {/* Body center — paling terang, ini bagian dalam amplop */}
+                <rect x="0" y="0" width={ENV_W} height={ENV_H} rx="9" fill="#7e9028"/>
+
+                {/* Lipatan kiri — lebih gelap, ini sisi luar */}
                 <path d={`M0 0 L${ENV_CX} ${ENV_H*0.58} L0 ${ENV_H} Z`}
-                  fill="url(#eside2)" stroke="rgba(165,140,90,0.14)" strokeWidth="0.5"/>
+                  fill="#5a6a18" clipPath="url(#envClip)"/>
+
+                {/* Lipatan kanan — lebih gelap, sisi luar */}
                 <path d={`M${ENV_W} 0 L${ENV_CX} ${ENV_H*0.58} L${ENV_W} ${ENV_H} Z`}
-                  fill="url(#eside2)" stroke="rgba(165,140,90,0.14)" strokeWidth="0.5"/>
+                  fill="#627218" clipPath="url(#envClip)"/>
+
+                {/* Lipatan bawah — paling gelap */}
+                <path d={`M0 ${ENV_H} L${ENV_CX} ${ENV_H*0.65} L${ENV_W} ${ENV_H} Z`}
+                  fill="#4e5e14" clipPath="url(#envClip)"/>
+
+                {/* Garis lipatan — visible tapi halus */}
+                <line x1="0" y1="0" x2={ENV_CX} y2={ENV_H*0.58} stroke="rgba(30,40,5,0.35)" strokeWidth="0.8"/>
+                <line x1={ENV_W} y1="0" x2={ENV_CX} y2={ENV_H*0.58} stroke="rgba(30,40,5,0.35)" strokeWidth="0.8"/>
+                <line x1="0" y1={ENV_H} x2={ENV_CX} y2={ENV_H*0.65} stroke="rgba(30,40,5,0.3)" strokeWidth="0.7"/>
+                <line x1={ENV_W} y1={ENV_H} x2={ENV_CX} y2={ENV_H*0.65} stroke="rgba(30,40,5,0.3)" strokeWidth="0.7"/>
+
+                {/* Border */}
+                <rect x="0" y="0" width={ENV_W} height={ENV_H} rx="9"
+                  fill="none" stroke="rgba(40,55,8,0.3)" strokeWidth="1"/>
               </svg>
 
               {/* ── TOP FLAP (CSS 3D) ── */}
@@ -543,14 +581,19 @@ export default function OpeningGate() {
                     transform:`rotateX(${flapOpen ? -180 : 0}deg)`,
                     transition:'transform 0.95s cubic-bezier(0.76,0,0.24,1)',
                   }}>
+                  {/* Flap — lebih gelap dari body center, ini bagian luar */}
+                  <path d={`M0 0 L${ENV_W} 0 L${ENV_CX} ${FLAP_TIP} Z`} fill="#566016"/>
+                  {/* Gradient terang di atas, gelap di bawah */}
                   <path d={`M0 0 L${ENV_W} 0 L${ENV_CX} ${FLAP_TIP} Z`}
-                    fill="#ede5ce" stroke="rgba(175,148,92,0.28)" strokeWidth="1"/>
-                  <path d={`M75 0 L${ENV_CX} ${FLAP_TIP*0.7}`}
-                    stroke="rgba(175,148,92,0.09)" strokeWidth="0.7"/>
-                  <path d={`M${ENV_W-75} 0 L${ENV_CX} ${FLAP_TIP*0.7}`}
-                    stroke="rgba(175,148,92,0.09)" strokeWidth="0.7"/>
-                  <path d={`M0 0 L${ENV_W} 0 L${ENV_CX} ${FLAP_TIP} Z`}
-                    fill="rgba(195,168,115,0.07)"/>
+                    fill="url(#flapShade)"/>
+                  <defs>
+                    <linearGradient id="flapShade" x1="0.5" y1="0" x2="0.5" y2="1">
+                      <stop offset="0%"   stopColor="#8a9e2a" stopOpacity="0.3"/>
+                      <stop offset="100%" stopColor="#2a3408" stopOpacity="0.15"/>
+                    </linearGradient>
+                  </defs>
+                  <line x1="0" y1="0" x2={ENV_CX} y2={FLAP_TIP} stroke="rgba(30,40,5,0.3)" strokeWidth="0.8"/>
+                  <line x1={ENV_W} y1="0" x2={ENV_CX} y2={FLAP_TIP} stroke="rgba(30,40,5,0.3)" strokeWidth="0.8"/>
                 </svg>
               </div>
 

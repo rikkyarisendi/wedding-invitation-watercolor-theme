@@ -4,7 +4,8 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { MapPin, Clock, Calendar, ExternalLink } from 'lucide-react';
 import { weddingConfig } from '@/lib/config';
 import { formatDate, getCountdownValues } from '@/lib/utils';
-import { WcBlob, WcLeaf, WcFlower, WcBranchRow, WcBrushStroke } from '@/components/ui/WatercolorOrnaments';
+import { WcBranchRow, WcBrushStroke } from '@/components/ui/WatercolorOrnaments';
+import { FloCrn, FlorThree, FlorFour, FlorFive, FlorSix } from '@/components/ui/IlustrationBG';
 
 function CountdownUnit({ value, label, delay }: { value: number; label: string; delay: number }) {
   const ref    = useRef(null);
@@ -14,10 +15,6 @@ function CountdownUnit({ value, label, delay }: { value: number; label: string; 
       initial={{ opacity: 0, y: 28, scale: 0.85 }}
       animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ delay, duration: 0.7, type: 'spring', stiffness: 120 }}>
-      <div className="absolute inset-0 pointer-events-none opacity-20"
-        style={{ transform: 'translate(-20%,-20%)' }}>
-        <WcBlob size={140} color="var(--sage-pale)" opacity={1} />
-      </div>
       <AnimatePresence mode="wait">
         <motion.p key={value} className="text-4xl md:text-5xl leading-none text-sage-gradient"
           style={{ fontFamily: 'var(--font-display)' }}
@@ -55,13 +52,12 @@ function EventCard({ data, label, icon, delay }: {
       animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
       transition={{ delay, duration: 1, ease: [0.16, 1, 0.3, 1] }}>
 
-      {/* Card blob bg */}
-      <div className="absolute -top-10 -right-10 pointer-events-none">
-        <WcBlob size={220} color="var(--sage-pale)" opacity={0.35} rotate={20} />
-      </div>
-      {/* Corner leaves */}
-      <div className="absolute top-3 right-3 opacity-30">
-        <WcLeaf size={28} color="var(--sage)" opacity={1} rotate={35} />
+      {/* Corner flower */}
+      <div className="absolute top-2 right-2 opacity-35 pointer-events-none">
+        <FlorFour
+          style={{ width: 'clamp(32px, 4vw, 52px)', aspectRatio: '1/1', height: 'auto' }}
+          rotate={20}
+        />
       </div>
 
       <div className="relative">
@@ -130,8 +126,20 @@ export default function EventDetails() {
 
   return (
     <section id="event" className="section-pad relative overflow-hidden">
-      <div className="absolute -bottom-20 -left-20 pointer-events-none">
-        <WcBlob size={450} color="var(--petal)" opacity={0.3} rotate={-20} />
+
+      {/* Corner PNG */}
+      <div className="absolute -bottom-8 -left-8 pointer-events-none opacity-55">
+        <FlorThree
+          style={{ width: 'clamp(100px, 14vw, 200px)', aspectRatio: '1/1', height: 'auto' }}
+          rotate={-20}
+        />
+      </div>
+      <div className="absolute -top-8 -right-8 pointer-events-none opacity-50">
+        <FlorSix
+          flip
+          style={{ width: 'clamp(100px, 14vw, 200px)', aspectRatio: '1/1', height: 'auto' }}
+          rotate={15}
+        />
       </div>
 
       <div className="max-w-5xl mx-auto">
@@ -139,7 +147,10 @@ export default function EventDetails() {
           initial={{ opacity: 0, y: 30 }}
           animate={titleInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}>
-          <WcFlower size={44} color="var(--sage)" opacity={0.85} />
+          <FloCrn
+            style={{ width: 'clamp(36px, 5vw, 56px)', aspectRatio: '1/1', height: 'auto', margin: '0 auto' }}
+            opacity={0.85}
+          />
           <p className="text-xs tracking-[0.35em] uppercase mt-4 mb-2"
             style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-sans)' }}>
             Kami Menantikan Kehadiran Anda
@@ -153,7 +164,6 @@ export default function EventDetails() {
           </div>
         </motion.div>
 
-        {/* Countdown */}
         <div className="flex justify-center gap-3 mb-14 flex-wrap">
           {[
             { value: cd.days,    label: 'Hari',  delay: 0 },

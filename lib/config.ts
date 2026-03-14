@@ -8,7 +8,7 @@ export const weddingConfig = {
     name:       'Dinda Intan Pratiwi',
     nickname:   'Dinda',
     fullName:   'Dinda Intan Pratiwi',
-    parents:    'Putri dari Bapak & Ibu',
+    parents:    'Putri dari Bapak Juwari & Ibu Khusnul Khotimah',
     photo:      '/images/pas-foto-dinda-2.png',
     instagram:  '@dindaip',
   },
@@ -89,8 +89,8 @@ export const weddingConfig = {
 
   // ---------- MUSIC ----------
   music: {
-    title:  'A Thousand Years — Christina Perri',
-    src:    '/audio/a-thousand-years.mp3',   // Taruh file mp3 di /public/audio/
+    title:  'Reality Club - Anything You Want',
+    src:    '/audio/bgm.mp3',   // Taruh file mp3 di /public/audio/
     autoplay: true,
   },
 
