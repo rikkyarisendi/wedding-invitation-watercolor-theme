@@ -282,8 +282,8 @@ export default function OpeningGate() {
                     </motion.span>
                     {weddingConfig.bride.nickname}
                   </motion.h1>
-                  <motion.div className="flex justify-center mt-2"
-                    initial={{ scaleX:0, opacity:0 }} animate={{ scaleX:1, opacity:1 }}
+                  <motion.div className="flex justify-center mt-2 overflow-hidden"
+                    initial={{ opacity:0 }} animate={{ opacity:1 }}
                     transition={{ delay:0.98, duration:0.8 }}>
                     <WcBrushStroke width={160} color="var(--sage)" opacity={0.5}/>
                   </motion.div>
@@ -292,8 +292,8 @@ export default function OpeningGate() {
                     initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:1.08 }}>
                     Mengundang kehadiran Anda di hari bahagia kami
                   </motion.p>
-                  <motion.div className="flex justify-center mt-3"
-                    initial={{ scaleX:0, opacity:0 }} animate={{ scaleX:1, opacity:1 }}
+                  <motion.div className="flex justify-center mt-3 overflow-hidden"
+                    initial={{ opacity:0 }} animate={{ opacity:1 }}
                     transition={{ delay:1.18, duration:0.8 }}>
                     <WcBranchRow width={180} color="var(--sage)"/>
                   </motion.div>
@@ -353,8 +353,8 @@ export default function OpeningGate() {
                         initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.28 }}>
                         Undangan Pernikahan
                       </motion.p>
-                      <motion.div className="flex justify-center mb-2"
-                        initial={{ scaleX:0 }} animate={{ scaleX:1 }} transition={{ delay:0.36, duration:0.6 }}>
+                      <motion.div className="flex justify-center mb-2 overflow-hidden"
+                        initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.36, duration:0.6 }}>
                         <WcBranchRow width={175} color="var(--sage)"/>
                       </motion.div>
                       <motion.h2
@@ -375,8 +375,8 @@ export default function OpeningGate() {
                         transition={{ delay:0.68, duration:0.65, ease:[0.16,1,0.3,1] }}>
                         {weddingConfig.bride.nickname}
                       </motion.h2>
-                      <motion.div className="flex justify-center mt-2"
-                        initial={{ scaleX:0 }} animate={{ scaleX:1 }} transition={{ delay:0.78, duration:0.6 }}>
+                      <motion.div className="flex justify-center mt-2 overflow-hidden"
+                        initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.78, duration:0.6 }}>
                         <WcBranchRow width={175} color="var(--sage)"/>
                       </motion.div>
                     </div>
@@ -471,8 +471,8 @@ export default function OpeningGate() {
                       initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.4 }}>
                       Undangan Pernikahan
                     </motion.p>
-                    <motion.div className="flex justify-center mb-4"
-                      initial={{ scaleX:0 }} animate={{ scaleX:1 }} transition={{ delay:0.48, duration:0.7 }}>
+                    <motion.div className="flex justify-center mb-4 overflow-hidden"
+                      initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.48, duration:0.7 }}>
                       <WcBranchRow width={260} color="var(--sage)"/>
                     </motion.div>
                     <motion.h1
@@ -495,8 +495,8 @@ export default function OpeningGate() {
                       transition={{ delay:0.84, duration:0.85, ease:[0.16,1,0.3,1] }}>
                       {weddingConfig.bride.nickname}
                     </motion.h1>
-                    <motion.div className="flex justify-center mt-4"
-                      initial={{ scaleX:0 }} animate={{ scaleX:1 }} transition={{ delay:0.96, duration:0.7 }}>
+                    <motion.div className="flex justify-center mt-4 overflow-hidden"
+                      initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.96, duration:0.7 }}>
                       <WcBranchRow width={260} color="var(--sage)"/>
                     </motion.div>
                   </div>

@@ -30,15 +30,18 @@ export function Navbar() {
   };
 
   return (
-    <motion.nav className="fixed top-0 inset-x-0 z-40 transition-all duration-500"
+    <motion.nav className="fixed top-0 left-0 right-0 z-40 transition-all duration-500"
       style={{
         background: scrolled ? 'rgba(248,246,240,0.88)' : 'transparent',
         backdropFilter: scrolled ? 'blur(16px)' : 'none',
         borderBottom: scrolled ? '1px solid var(--border)' : 'none',
+        width: '100%',
+        maxWidth: '100vw',
+        overflowX: 'hidden',
       }}
       initial={{ y: -80 }} animate={{ y: 0 }}
       transition={{ delay: 0.5, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="w-full px-6 py-4 flex items-center justify-between">
         <motion.button onClick={() => scrollTo('#hero')}
           className="text-lg leading-none"
           style={{ fontFamily: 'var(--font-script)', color: 'var(--moss-dark)' }}
@@ -151,7 +154,7 @@ export function MusicPlayer() {
           className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg relative"
           style={{ background: 'var(--moss)' }}>
           {playing && (
-            <motion.div className="absolute inset-0 rounded-full"
+            <motion.div className="absolute inset-0 rounded-full pointer-events-none"
               style={{ background: 'var(--moss)', opacity: 0.4 }}
               animate={{ scale: [1, 1.5, 1], opacity: [0.4, 0, 0.4] }}
               transition={{ duration: 2.5, repeat: Infinity }}
@@ -185,7 +188,7 @@ export function PetalAnimation() {
   if (petals.length === 0) return null;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-20 overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-20 overflow-hidden" style={{ width: '100vw', maxWidth: '100vw' }}>
       {petals.map((p) => (
         <div key={p.id} className="absolute"
           style={{

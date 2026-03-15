@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { MapPin, Clock, Calendar, ExternalLink } from 'lucide-react';
 import { weddingConfig } from '@/lib/config';
@@ -7,11 +7,11 @@ import { formatDate, getCountdownValues } from '@/lib/utils';
 import { WcBranchRow, WcBrushStroke } from '@/components/ui/WatercolorOrnaments';
 import { FloCrn, FlorThree, FlorFour, FlorFive, FlorSix } from '@/components/ui/IlustrationBG';
 
-function CountdownUnit({ value, label, delay }: { value: number; label: string; delay: number }) {
+const CountdownUnit = memo(function CountdownUnit({ value, label, delay }: { value: number; label: string; delay: number }) {
   const ref    = useRef(null);
   const inView = useInView(ref, { once: true });
   return (
-    <motion.div ref={ref} className="wc-card px-5 py-4 text-center min-w-[72px] relative "
+    <motion.div ref={ref} className="wc-card px-5 py-4 text-center min-w-[72px] relative"
       initial={{ opacity: 0, y: 28, scale: 0.85 }}
       animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ delay, duration: 0.7, type: 'spring', stiffness: 120 }}>
@@ -31,7 +31,26 @@ function CountdownUnit({ value, label, delay }: { value: number; label: string; 
       </p>
     </motion.div>
   );
-}
+});
+
+// Komponen countdown terpisah supaya re-render setiap detik tidak cascade ke seluruh section
+const CountdownTimer = memo(function CountdownTimer() {
+  const [cd, setCd] = useState(getCountdownValues(weddingConfig.event.akad.date));
+  useEffect(() => {
+    const t = setInterval(() => setCd(getCountdownValues(weddingConfig.event.akad.date)), 1000);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <div className="flex justify-center gap-3 mb-14 flex-wrap">
+      {[
+        { value: cd.days,    label: 'Hari',  delay: 0 },
+        { value: cd.hours,   label: 'Jam',   delay: 0.1 },
+        { value: cd.minutes, label: 'Menit', delay: 0.2 },
+        { value: cd.seconds, label: 'Detik', delay: 0.3 },
+      ].map((u) => <CountdownUnit key={u.label} {...u} />)}
+    </div>
+  );
+});
 
 function EventCard({ data, label, icon, delay }: {
   data: typeof weddingConfig.event.akad; label: string; icon: string; delay: number;
@@ -118,11 +137,6 @@ function EventCard({ data, label, icon, delay }: {
 export default function EventDetails() {
   const titleRef    = useRef(null);
   const titleInView = useInView(titleRef, { once: true, margin: '-60px' });
-  const [cd, setCd] = useState(getCountdownValues(weddingConfig.event.akad.date));
-  useEffect(() => {
-    const t = setInterval(() => setCd(getCountdownValues(weddingConfig.event.akad.date)), 1000);
-    return () => clearInterval(t);
-  }, []);
 
   return (
     <section id="event" className="section-pad relative ">
@@ -171,14 +185,7 @@ export default function EventDetails() {
           </div>
         </motion.div>
 
-        <div className="flex justify-center gap-3 mb-14 flex-wrap">
-          {[
-            { value: cd.days,    label: 'Hari',  delay: 0 },
-            { value: cd.hours,   label: 'Jam',   delay: 0.1 },
-            { value: cd.minutes, label: 'Menit', delay: 0.2 },
-            { value: cd.seconds, label: 'Detik', delay: 0.3 },
-          ].map((u) => <CountdownUnit key={u.label} {...u} />)}
-        </div>
+        <CountdownTimer />
 
         <div className="grid md:grid-cols-2 gap-8">
           <EventCard data={weddingConfig.event.akad}      label="Akad Nikah"        icon="🕌" delay={0} />

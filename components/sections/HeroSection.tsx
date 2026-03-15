@@ -126,8 +126,8 @@ export default function HeroSection() {
           {weddingConfig.groom.nickname}
         </motion.h1>
 
-        <motion.div className="flex justify-center my-3"
-          initial={{ scaleX:0, opacity:0 }} animate={{ scaleX:1, opacity:1 }}
+        <motion.div className="flex justify-center my-3 overflow-hidden"
+          initial={{ opacity:0 }} animate={{ opacity:1 }}
           transition={{ delay:0.9, duration:0.9 }}>
           <WcBrushStroke width={220} color="var(--sage)" opacity={0.6}/>
         </motion.div>

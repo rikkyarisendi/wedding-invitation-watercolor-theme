@@ -87,7 +87,8 @@ export function WcBranchRow({ width = 300, color = 'var(--sage)' }: {
   const cx = width / 2;
   return (
     // 🎨 SVG: WcBranchRow — ranting botanical divider
-    <svg width={width} height={50} viewBox={`0 0 ${width} 50`} fill="none">
+    <svg width={width} height={50} viewBox={`0 0 ${width} 50`} fill="none"
+      style={{ display: 'block', overflow: 'hidden' }}>
       {/* Batang ranting kiri */}
       <path d={`M${cx} 25 C${cx-30} 25 ${cx-80} 22 ${cx-130} 25`}
         stroke={color} strokeWidth="0.8" opacity="0.5"/>
@@ -206,7 +207,7 @@ export function WcBrushStroke({ width = 200, color = 'var(--sage-light)', opacit
 }) {
   return (
     // 🎨 SVG: WcBrushStroke — sapuan kuas horizontal
-    <svg width={width} height={16} viewBox={`0 0 ${width} 16`} fill="none" style={{ opacity }}>
+    <svg width={width} height={16} viewBox={`0 0 ${width} 16`} fill="none" style={{ opacity, display: 'block', overflow: 'hidden' }}>
       {/* Sapuan utama — ganti Q control point untuk atur lengkung */}
       <path d={`M4 10 Q${width*0.25} 6 ${width*0.5} 9 Q${width*0.75} 12 ${width-4} 8`}
         stroke={color} strokeWidth="6" strokeLinecap="round" opacity="0.35"

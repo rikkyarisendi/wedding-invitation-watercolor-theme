@@ -11,7 +11,7 @@ import { Navbar, MusicPlayer, PetalAnimation } from '@/components/ui/UIComponent
 
 export default function HomePage() {
   return (
-    <div style={{ overflowX: 'hidden', maxWidth: '100vw', position: 'relative' }}>
+    <div style={{ overflowX: 'clip', maxWidth: '100vw', position: 'relative' }}>
       <OpeningGate />
       <div id="navbar-wrapper" style={{ opacity: 0, pointerEvents: 'none', transition: 'opacity 1.4s ease' }}>
         <Navbar />
