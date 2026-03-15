@@ -11,7 +11,7 @@ function CountdownUnit({ value, label, delay }: { value: number; label: string; 
   const ref    = useRef(null);
   const inView = useInView(ref, { once: true });
   return (
-    <motion.div ref={ref} className="wc-card px-5 py-4 text-center min-w-[72px] relative overflow-hidden"
+    <motion.div ref={ref} className="wc-card px-5 py-4 text-center min-w-[72px] relative "
       initial={{ opacity: 0, y: 28, scale: 0.85 }}
       animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ delay, duration: 0.7, type: 'spring', stiffness: 120 }}>
@@ -47,7 +47,7 @@ function EventCard({ data, label, icon, delay }: {
   };
 
   return (
-    <motion.div ref={ref} className="wc-card p-8 relative overflow-hidden"
+    <motion.div ref={ref} className="wc-card p-8 relative "
       initial={{ opacity: 0, y: 50, filter: 'blur(6px)' }}
       animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
       transition={{ delay, duration: 1, ease: [0.16, 1, 0.3, 1] }}>
@@ -55,7 +55,7 @@ function EventCard({ data, label, icon, delay }: {
       {/* Corner flower */}
       <div className="absolute top-2 right-2 opacity-35 pointer-events-none">
         <FlorFour
-          style={{ width: 'clamp(32px, 4vw, 52px)', aspectRatio: '1/1', height: 'auto' }}
+          className="w-8 sm:w-10 md:w-12 lg:w-14" style={{ aspectRatio:'1/1', height:'auto' }}
           rotate={20}
         />
       </div>
@@ -93,7 +93,7 @@ function EventCard({ data, label, icon, delay }: {
           ))}
         </div>
 
-        <div className="rounded-xl overflow-hidden mb-4" style={{ border: '1px solid var(--border)' }}>
+        <div className="rounded-xl  mb-4" style={{ border: '1px solid var(--border)' }}>
           <iframe src={data.mapsEmbed} width="100%" height="180" style={{ border: 0 }}
             allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title={label} />
         </div>
@@ -125,19 +125,26 @@ export default function EventDetails() {
   }, []);
 
   return (
-    <section id="event" className="section-pad relative overflow-hidden">
+    <section id="event" className="section-pad relative ">
 
       {/* Corner PNG */}
-      <div className="absolute -bottom-8 -left-8 pointer-events-none opacity-55">
+      <div className="absolute -bottom-20 -left-8 pointer-events-none opacity-55" style={{ zIndex: 20 }}>
         <FlorThree
-          style={{ width: 'clamp(100px, 14vw, 200px)', aspectRatio: '1/1', height: 'auto' }}
+          className="w-28 sm:w-36 md:w-48 lg:w-56" style={{ aspectRatio:'1/1', height:'auto' }}
           rotate={-20}
+        />
+      </div>
+      <div className="absolute -bottom-20 -right-8 pointer-events-none opacity-50" style={{ zIndex: 20 }}>
+        <FlorSix
+          flip
+          className="w-28 sm:w-36 md:w-48 lg:w-56" style={{ aspectRatio:'1/1', height:'auto' }}
+          rotate={15}
         />
       </div>
       <div className="absolute -top-8 -right-8 pointer-events-none opacity-50">
         <FlorSix
           flip
-          style={{ width: 'clamp(100px, 14vw, 200px)', aspectRatio: '1/1', height: 'auto' }}
+          className="w-24 sm:w-36 md:w-48 lg:w-52" style={{ aspectRatio:'1/1', height:'auto' }}
           rotate={15}
         />
       </div>
@@ -148,7 +155,7 @@ export default function EventDetails() {
           animate={titleInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}>
           <FloCrn
-            style={{ width: 'clamp(36px, 5vw, 56px)', aspectRatio: '1/1', height: 'auto', margin: '0 auto' }}
+            className="w-9 sm:w-11 md:w-13 lg:w-14" style={{ aspectRatio:'1/1', height:'auto', margin:'0 auto' }}
             opacity={0.85}
           />
           <p className="text-xs tracking-[0.35em] uppercase mt-4 mb-2"

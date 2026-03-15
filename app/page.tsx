@@ -11,10 +11,12 @@ import { Navbar, MusicPlayer, PetalAnimation } from '@/components/ui/UIComponent
 
 export default function HomePage() {
   return (
-    <>
+    <div style={{ overflowX: 'hidden', maxWidth: '100vw', position: 'relative' }}>
       <OpeningGate />
-      <div id="main-content">
+      <div id="navbar-wrapper" style={{ opacity: 0, pointerEvents: 'none', transition: 'opacity 1.4s ease' }}>
         <Navbar />
+      </div>
+      <div id="main-content">
         <PetalAnimation />
         <main>
           <HeroSection />
@@ -29,6 +31,6 @@ export default function HomePage() {
         <Footer />
         <MusicPlayer />
       </div>
-    </>
+    </div>
   );
 }

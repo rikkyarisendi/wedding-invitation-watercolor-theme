@@ -29,12 +29,13 @@ export function DigitalEnvelope() {
   };
 
   return (
-    <section className="section-pad relative overflow-hidden">
+    <section className="section-pad relative ">
 
       {/* Corner PNG */}
       <div className="absolute -top-8 -right-8 pointer-events-none opacity-50">
         <FlorOne
-          style={{ width: 'clamp(90px, 12vw, 180px)', aspectRatio: '1/1', height: 'auto' }}
+          className="w-20 sm:w-28 md:w-36 lg:w-44"
+          style={{ aspectRatio:'1/1', height:'auto' }}
           rotate={10}
         />
       </div>
@@ -66,14 +67,15 @@ export function DigitalEnvelope() {
 
         <div className="space-y-4">
           {weddingConfig.digitalEnvelope.accounts.map((acc, i) => (
-            <motion.div key={i} className="wc-card p-6 relative overflow-hidden"
+            <motion.div key={i} className="wc-card p-6 relative "
               initial={{ opacity: 0, y: 28, filter: 'blur(4px)' }}
               animate={titleInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
               transition={{ delay: 0.1 + i * 0.12, duration: 0.8 }}
               whileHover={{ y: -3, transition: { duration: 0.3 } }}>
               <div className="absolute top-2 right-2 opacity-20 pointer-events-none">
                 <FlorFour
-                  style={{ width: 'clamp(24px, 3vw, 40px)', aspectRatio: '1/1', height: 'auto' }}
+                  className="w-6 sm:w-8 md:w-10"
+                  style={{ aspectRatio:'1/1', height:'auto' }}
                   rotate={15}
                 />
               </div>
@@ -132,28 +134,28 @@ export function Footer() {
   const inView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <footer className="relative overflow-hidden py-20 px-6 text-center"
+    <footer className="relative  py-20 px-6 text-center"
       style={{ background: 'var(--bg-2)', borderTop: '1px solid var(--border)' }}>
 
       {/* Corner PNG flowers */}
       <div className="absolute top-0 left-0 pointer-events-none opacity-45">
         <FloatingFlower delay={0}>
-          <FloTop style={{ width: 'clamp(80px, 10vw, 160px)', aspectRatio: '1/1', height: 'auto' }} />
+          <FloTop className="w-20 sm:w-28 md:w-36 lg:w-40" style={{ aspectRatio:'1/1', height:'auto' }} />
         </FloatingFlower>
       </div>
       <div className="absolute top-0 right-0 pointer-events-none opacity-45">
         <FloatingFlower delay={0.8}>
-          <FloTop flip style={{ width: 'clamp(80px, 10vw, 160px)', aspectRatio: '1/1', height: 'auto' }} />
+          <FloTop flip className="w-20 sm:w-28 md:w-36 lg:w-40" style={{ aspectRatio:'1/1', height:'auto' }} />
         </FloatingFlower>
       </div>
       <div className="absolute bottom-0 left-0 pointer-events-none opacity-40">
         <FloatingFlower delay={1.2}>
-          <FloBot style={{ width: 'clamp(70px, 9vw, 140px)', aspectRatio: '1/1', height: 'auto' }} />
+          <FloBot className="w-16 sm:w-24 md:w-32 lg:w-36" style={{ aspectRatio:'1/1', height:'auto' }} />
         </FloatingFlower>
       </div>
       <div className="absolute bottom-0 right-0 pointer-events-none opacity-40">
         <FloatingFlower delay={0.4}>
-          <FloBot flip style={{ width: 'clamp(70px, 9vw, 140px)', aspectRatio: '1/1', height: 'auto' }} />
+          <FloBot flip className="w-16 sm:w-24 md:w-32 lg:w-36" style={{ aspectRatio:'1/1', height:'auto' }} />
         </FloatingFlower>
       </div>
 
@@ -164,7 +166,8 @@ export function Footer() {
         <motion.div className="flex justify-center mb-6"
           animate={{ rotate: 360 }} transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}>
           <FloCrn
-            style={{ width: 'clamp(40px, 6vw, 60px)', aspectRatio: '1/1', height: 'auto', margin: '0 auto' }}
+            className="w-10 sm:w-12 md:w-14 lg:w-16"
+            style={{ aspectRatio:'1/1', height:'auto', margin:'0 auto' }}
             opacity={0.9}
           />
         </motion.div>

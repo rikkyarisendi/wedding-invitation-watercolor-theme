@@ -41,35 +41,35 @@ export default function OpeningSection() {
   const coupleInView = useInView(coupleRef, { once: true, margin:'-60px' });
 
   return (
-    <section className="section-pad relative overflow-hidden">
+    <section className="section-pad relative ">
 
       {/* ── Dekorasi pojok section ── */}
       <motion.div className="absolute -top-8 -left-8 pointer-events-none"
         initial={{ opacity:0, x:-20 }} whileInView={{ opacity:1, x:0 }}
         transition={{ duration:1 }} viewport={{ once:true }}>
         <FloatingFlower delay={0}>
-          <FloTop opacity={0.88} rotate={15} className="w-36 h-36 sm:w-44 sm:h-44 md:w-56 md:h-56"/>
+          <FloTop opacity={0.88} rotate={15} className="w-36 sm:w-44 md:w-56" style={{ aspectRatio:"1/1", height:"auto" }}/>
         </FloatingFlower>
       </motion.div>
       <motion.div className="absolute -top-8 -right-8 pointer-events-none"
         initial={{ opacity:0, x:20 }} whileInView={{ opacity:1, x:0 }}
         transition={{ duration:1, delay:0.1 }} viewport={{ once:true }}>
         <FloatingFlower delay={0.8}>
-          <FloBot opacity={0.85} flip rotate={-10} className="w-36 h-36 sm:w-44 sm:h-44 md:w-56 md:h-56"/>
+          <FloBot opacity={0.85} flip rotate={-10} className="w-36 sm:w-44 md:w-56" style={{ aspectRatio:"1/1", height:"auto" }}/>
         </FloatingFlower>
       </motion.div>
       <motion.div className="absolute -bottom-6 -left-6 pointer-events-none"
         initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }}
         transition={{ duration:1, delay:0.15 }} viewport={{ once:true }}>
         <FloatingFlower delay={1.2}>
-          <FloCrn opacity={0.8} rotate={-20} className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48"/>
+          <FloCrn opacity={0.8} rotate={-20} className="w-32 sm:w-40 md:w-48" style={{ aspectRatio:"1/1", height:"auto" }}/>
         </FloatingFlower>
       </motion.div>
       <motion.div className="absolute -bottom-6 -right-6 pointer-events-none"
         initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }}
         transition={{ duration:1, delay:0.2 }} viewport={{ once:true }}>
         <FloatingFlower delay={0.4}>
-          <FloCrn opacity={0.8} flip rotate={20} className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48"/>
+          <FloCrn opacity={0.8} flip rotate={20} className="w-32 sm:w-40 md:w-48" style={{ aspectRatio:"1/1", height:"auto" }}/>
         </FloatingFlower>
       </motion.div>
 
@@ -90,19 +90,19 @@ export default function OpeningSection() {
 
         {/* ── Quran verse card ── */}
         <FadeUp delay={0.1}>
-          <div className="wc-card p-8 md:p-12 text-center mb-14 relative overflow-hidden">
+          <div className="wc-card p-8 md:p-12 text-center mb-14 relative ">
             {/* Bunga di pojok dalam card — z rendah, di belakang teks */}
             <div className="absolute top-0 left-0 pointer-events-none opacity-40">
-              <FlorOne rotate={-20} className="w-28 h-28 sm:w-32 sm:h-32"/>
+              <FlorOne rotate={-20} className="w-28 sm:w-32" style={{ aspectRatio:"1/1", height:"auto" }}/>
             </div>
             <div className="absolute top-0 right-0 pointer-events-none opacity-40">
-              <FlorTwo flip rotate={20} className="w-28 h-28 sm:w-32 sm:h-32"/>
+              <FlorTwo flip rotate={20} className="w-28 sm:w-32" style={{ aspectRatio:"1/1", height:"auto" }}/>
             </div>
             <div className="absolute bottom-0 left-0 pointer-events-none opacity-30">
-              <FlorThree rotate={30} className="w-20 h-20 sm:w-24 sm:h-24"/>
+              <FlorThree rotate={30} className="w-20 sm:w-24" style={{ aspectRatio:"1/1", height:"auto" }}/>
             </div>
             <div className="absolute bottom-0 right-0 pointer-events-none opacity-30">
-              <FlorThree flip rotate={-30} className="w-20 h-20 sm:w-24 sm:h-24"/>
+              <FlorThree flip rotate={-30} className="w-20 sm:w-24" style={{ aspectRatio:"1/1", height:"auto" }}/>
             </div>
 
             <div className="relative z-10">
@@ -154,7 +154,8 @@ export default function OpeningSection() {
                     opacity={0.9}
                     rotate={i===0 ? -25 : 155}
                     flip={i===1}
-                    className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36"
+                    className="w-28 sm:w-32 md:w-36"
+                    style={{ aspectRatio:'1/1', height:'auto' }}
                   />
                 </FloatingFlower>
               </div>
@@ -167,7 +168,8 @@ export default function OpeningSection() {
                     opacity={0.85}
                     rotate={i===0 ? 155 : -25}
                     flip={i===0}
-                    className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32"
+                    className="w-24 sm:w-28 md:w-32"
+                    style={{ aspectRatio:'1/1', height:'auto' }}
                   />
                 </FloatingFlower>
               </div>
@@ -179,7 +181,7 @@ export default function OpeningSection() {
                 <div className="relative mx-auto mb-5"
                   style={{ width:140, height:140 }}>
                   <motion.div
-                    className="w-full h-full rounded-full overflow-hidden"
+                    className="w-full h-full rounded-full "
                     whileHover={{ scale:1.04 }}
                     transition={{ duration:0.4 }}>
                     <Image
@@ -230,7 +232,7 @@ export default function OpeningSection() {
         <FadeUp delay={0.3}>
           <div className="flex flex-col items-center mt-24 gap-3">
             <FloatingFlower delay={0}>
-              <FloCtr opacity={0.7} className="w-48 h-20 sm:w-56 sm:h-24 md:w-72 md:h-28"/>
+              <FloCtr opacity={0.7} className="w-48 sm:w-56 md:w-72" style={{ aspectRatio:'1/1', height:'auto' }}/>
             </FloatingFlower>
             <WcBranchRow width={300} color="var(--sage)"/>
           </div>

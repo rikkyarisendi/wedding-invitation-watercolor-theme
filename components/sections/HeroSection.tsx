@@ -5,10 +5,7 @@ import Image from 'next/image';
 import { weddingConfig } from '@/lib/config';
 import { formatDate } from '@/lib/utils';
 import { WcBrushStroke } from '@/components/ui/WatercolorOrnaments';
-import {
-  FloTop, FloBot, FloCrn, FloMid,
-  FlorOne, FlorTwo, FlorThree, FlorFour,
-} from '@/components/ui/IlustrationBG';
+import { FloTop, FloBot, FlorOne, FlorTwo } from '@/components/ui/IlustrationBG';
 
 function FloatingFlower({ children, delay = 0, className = '' }: {
   children: React.ReactNode; delay?: number; className?: string;
@@ -30,15 +27,13 @@ export default function HeroSection() {
   const opacity  = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
   return (
-    <section id="hero" ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="hero" ref={ref} className="relative min-h-screen flex items-center justify-center ">
 
       {/* ── Background image ── */}
       <motion.div className="absolute inset-0" style={{ y: bgY }}>
-        {/* Desktop & tablet — landscape, muncul di sm ke atas */}
         <div className="hidden sm:block absolute inset-0">
           <Image src="/images/hero-bg.jpg" alt="Hero" fill className="object-cover" priority />
         </div>
-        {/* Mobile — portrait, muncul di bawah sm */}
         <div className="block sm:hidden absolute inset-0">
           <Image src="/images/hero-bg-mobile.jpg" alt="Hero" fill className="object-cover object-top" priority />
         </div>
@@ -46,14 +41,14 @@ export default function HeroSection() {
           style={{ background: 'linear-gradient(to bottom, rgba(238,245,238,0.55) 0%, rgba(212,232,213,0.45) 40%, var(--bg) 100%)' }}/>
       </motion.div>
 
-      {/* ── PNG corner decorations ── */}
-
       {/* Top left */}
       <motion.div className="absolute top-0 left-0 pointer-events-none"
         initial={{ opacity:0, x:-20 }} animate={{ opacity:1, x:0 }}
         transition={{ delay:0.8, duration:1 }}>
         <FloatingFlower delay={0}>
-          <FloTop opacity={0.88} className="w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64"/>
+          <FloTop opacity={0.88}
+            className="w-28 sm:w-40 md:w-52 lg:w-64"
+            style={{ aspectRatio:'1/1', height:'auto' }}/>
         </FloatingFlower>
       </motion.div>
 
@@ -62,7 +57,9 @@ export default function HeroSection() {
         initial={{ opacity:0, x:20 }} animate={{ opacity:1, x:0 }}
         transition={{ delay:0.9, duration:1 }}>
         <FloatingFlower delay={0.8}>
-          <FloTop flip opacity={0.85} className="w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64"/>
+          <FloTop flip opacity={0.85}
+            className="w-28 sm:w-40 md:w-52 lg:w-64"
+            style={{ aspectRatio:'1/1', height:'auto' }}/>
         </FloatingFlower>
       </motion.div>
 
@@ -71,7 +68,9 @@ export default function HeroSection() {
         initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }}
         transition={{ delay:1.0, duration:1 }}>
         <FloatingFlower delay={1.2}>
-          <FloBot opacity={0.82} className="w-36 h-36 sm:w-48 sm:h-48 md:w-60 md:h-60"/>
+          <FloBot opacity={0.82}
+            className="w-24 sm:w-36 md:w-48 lg:w-60"
+            style={{ aspectRatio:'1/1', height:'auto' }}/>
         </FloatingFlower>
       </motion.div>
 
@@ -80,25 +79,31 @@ export default function HeroSection() {
         initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }}
         transition={{ delay:1.1, duration:1 }}>
         <FloatingFlower delay={0.4}>
-          <FloBot flip opacity={0.82} className="w-36 h-36 sm:w-48 sm:h-48 md:w-60 md:h-60"/>
+          <FloBot flip opacity={0.82}
+            className="w-24 sm:w-36 md:w-48 lg:w-60"
+            style={{ aspectRatio:'1/1', height:'auto' }}/>
         </FloatingFlower>
       </motion.div>
 
       {/* Mid left accent */}
-      <motion.div className="absolute left-0 top-1/3 pointer-events-none"
+      <motion.div className="absolute left-14 top-1/3 md:left-1/3 md:top-1/2 pointer-events-none"
         initial={{ opacity:0, x:-16 }} animate={{ opacity:1, x:0 }}
         transition={{ delay:1.3, duration:1 }}>
         <FloatingFlower delay={1.8}>
-          <FlorOne opacity={0.55} className="w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36"/>
+          <FlorOne opacity={0.55}
+            className="w-16 sm:w-20 md:w-28 lg:w-36"
+            style={{ aspectRatio:'1/1', height:'auto' }}/>
         </FloatingFlower>
       </motion.div>
 
       {/* Mid right accent */}
-      <motion.div className="absolute right-0 top-1/3 pointer-events-none"
+      <motion.div className="absolute right-14 bottom-1/3 md:right-1/3 md:bottom-1/2 pointer-events-none"
         initial={{ opacity:0, x:16 }} animate={{ opacity:1, x:0 }}
         transition={{ delay:1.4, duration:1 }}>
         <FloatingFlower delay={1.0}>
-          <FlorTwo flip opacity={0.55} className="w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36"/>
+          <FlorTwo flip opacity={0.55}
+            className="w-16 sm:w-20 md:w-28 lg:w-36"
+            style={{ aspectRatio:'1/1', height:'auto' }}/>
         </FloatingFlower>
       </motion.div>
 

@@ -1,18 +1,17 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { weddingConfig } from '@/lib/config';
-import { WcBlob, WcLeaf, WcBranchRow, WcFlower, WcSplatter, WcBrushStroke } from '@/components/ui/WatercolorOrnaments';
-import { FloBot, FloTop, FloCtr, FloCrn, FloMid, FlorOne, FlorTwo, FlorThree, FlorFour, FlorFive, FlorSix, FlorSeven } from '@/components/ui/IlustrationBG';
+import { WcBlob, WcBranchRow, WcFlower, WcBrushStroke } from '@/components/ui/WatercolorOrnaments';
+import { FloTop, FloBot, FloCrn, FlorOne, FlorTwo, FlorThree, FlorFour, FlorFive, FlorSix, FlorSeven } from '@/components/ui/IlustrationBG';
 
 type Phase = 'idle' | 'seal-break' | 'flap-open' | 'card-rise' | 'card-expand' | 'gone';
 
 const ENV_W     = 340;
 const ENV_H     = 220;
 const ENV_CX    = 170;
-const FLAP_TIP  = 121;  // y ujung flap dari atas
+const FLAP_TIP  = 121;
 
-// ─── Partikel lilin ───────────────────────────────────────────────
 function SealParticles({ active }: { active: boolean }) {
   const pts = Array.from({ length: 20 }, (_, i) => {
     const angle = (i / 20) * 360;
@@ -43,9 +42,6 @@ function SealParticles({ active }: { active: boolean }) {
   );
 }
 
-// ─── Wax Stamp — bentuk organik seperti lilin meleleh ─────────────
-// Tidak bulat sempurna — tepi bergelombang, ada tetesan lilin,
-// permukaan bertekstur, ada kedalaman 3D dari shading
 function WaxStamp({ phase, onClick }: { phase: Phase; onClick: () => void }) {
   const cracking = phase === 'seal-break';
   const gone     = ['flap-open','card-rise','card-expand'].includes(phase);
@@ -54,15 +50,10 @@ function WaxStamp({ phase, onClick }: { phase: Phase; onClick: () => void }) {
   return (
     <div
       className="relative flex items-center justify-center"
-      style={{
-        width: 82, height: 82,
-        cursor: isIdle ? 'pointer' : 'default',
-        zIndex: 10,
-      }}
+      style={{ width: 82, height: 82, cursor: isIdle ? 'pointer' : 'default', zIndex: 10 }}
       onClick={isIdle ? onClick : undefined}
     >
       <SealParticles active={cracking} />
-
       <motion.div
         animate={
           cracking ? {
@@ -79,157 +70,77 @@ function WaxStamp({ phase, onClick }: { phase: Phase; onClick: () => void }) {
       >
         <svg width="82" height="82" viewBox="0 0 82 82" fill="none">
           <defs>
-            {/* Gradient utama lilin — gold/emas cocok dengan olive */}
             <radialGradient id="waxMain" cx="38%" cy="32%" r="65%">
               <stop offset="0%"   stopColor="#f0c84a"/>
               <stop offset="45%"  stopColor="#c8980a"/>
               <stop offset="100%" stopColor="#8a6200"/>
             </radialGradient>
-            {/* Gradient shadow bawah */}
             <radialGradient id="waxDepth" cx="50%" cy="85%" r="55%">
               <stop offset="0%"   stopColor="#4a3000" stopOpacity="0.5"/>
               <stop offset="100%" stopColor="#4a3000" stopOpacity="0"/>
             </radialGradient>
-            {/* Highlight gold */}
             <radialGradient id="waxHi" cx="32%" cy="25%" r="40%">
               <stop offset="0%"   stopColor="#fff8d0" stopOpacity="0.65"/>
               <stop offset="100%" stopColor="#fff8d0" stopOpacity="0"/>
             </radialGradient>
-            {/* Noise texture untuk permukaan lilin */}
             <filter id="waxNoise" x="-5%" y="-5%" width="110%" height="110%">
               <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" result="noise"/>
               <feColorMatrix type="saturate" values="0" result="grayNoise"/>
               <feBlend in="SourceGraphic" in2="grayNoise" mode="multiply" result="blend"/>
               <feComposite in="blend" in2="SourceGraphic" operator="in"/>
             </filter>
-            {/* Drop shadow stamp */}
             <filter id="stampShadow" x="-15%" y="-10%" width="130%" height="130%">
               <feDropShadow dx="0" dy="4" stdDeviation="5" floodColor="rgba(80,30,5,0.5)"/>
             </filter>
           </defs>
-
-          {/*
-            ── Bentuk stamp lilin organik ──
-            Bukan lingkaran sempurna — path dengan titik-titik tidak rata
-            agar terlihat seperti lilin yang ditekan & sedikit meleleh di tepi
-          */}
-          {/* Layer 1: shadow/kedalaman */}
-          <path d="
-            M41 76
-            C32 76 20 71 15 63
-            C9  55  8  44  10 35
-            C12 25  18 14  28 10
-            C35  7  47  6  56 10
-            C65 14  72 22  74 32
-            C76 42  73 55  66 63
-            C60 70  50 76  41 76 Z"
-            fill="url(#waxDepth)"
-            transform="translate(0, 2)"
-          />
-
-          {/* Layer 2: body utama lilin */}
-          <path d="
-            M41 75
-            C34 75.5 23 71 17 63
-            C11 55 10 44 12 35
-            C14 25 20 14 30 10
-            C37  7 48  6 57 10
-            C66 14 73 23 74 33
-            C75 43 72 55 65 63
-            C59 70 49 74.5 41 75 Z"
-            fill="url(#waxMain)"
-            filter="url(#stampShadow)"
-          />
-
-          {/* Layer 3: texture noise */}
-          <path d="
-            M41 75
-            C34 75.5 23 71 17 63
-            C11 55 10 44 12 35
-            C14 25 20 14 30 10
-            C37  7 48  6 57 10
-            C66 14 73 23 74 33
-            C75 43 72 55 65 63
-            C59 70 49 74.5 41 75 Z"
-            fill="rgba(100,70,0,0.18)"
-            filter="url(#waxNoise)"
-          />
-
-          {/* Layer 4: highlight permukaan */}
-          <path d="
-            M41 75
-            C34 75.5 23 71 17 63
-            C11 55 10 44 12 35
-            C14 25 20 14 30 10
-            C37  7 48  6 57 10
-            C66 14 73 23 74 33
-            C75 43 72 55 65 63
-            C59 70 49 74.5 41 75 Z"
-            fill="url(#waxHi)"
-          />
-
-          {/* ── Tetesan lilin kecil di tepi ── memberi kesan meleleh */}
+          <path d="M41 76 C32 76 20 71 15 63 C9 55 8 44 10 35 C12 25 18 14 28 10 C35 7 47 6 56 10 C65 14 72 22 74 32 C76 42 73 55 66 63 C60 70 50 76 41 76 Z"
+            fill="url(#waxDepth)" transform="translate(0, 2)"/>
+          <path d="M41 75 C34 75.5 23 71 17 63 C11 55 10 44 12 35 C14 25 20 14 30 10 C37 7 48 6 57 10 C66 14 73 23 74 33 C75 43 72 55 65 63 C59 70 49 74.5 41 75 Z"
+            fill="url(#waxMain)" filter="url(#stampShadow)"/>
+          <path d="M41 75 C34 75.5 23 71 17 63 C11 55 10 44 12 35 C14 25 20 14 30 10 C37 7 48 6 57 10 C66 14 73 23 74 33 C75 43 72 55 65 63 C59 70 49 74.5 41 75 Z"
+            fill="rgba(100,70,0,0.18)" filter="url(#waxNoise)"/>
+          <path d="M41 75 C34 75.5 23 71 17 63 C11 55 10 44 12 35 C14 25 20 14 30 10 C37 7 48 6 57 10 C66 14 73 23 74 33 C75 43 72 55 65 63 C59 70 49 74.5 41 75 Z"
+            fill="url(#waxHi)"/>
           <ellipse cx="14" cy="52" rx="4" ry="6" fill="#b88a00" opacity="0.7" transform="rotate(-20 14 52)"/>
           <ellipse cx="68" cy="48" rx="3" ry="5" fill="#a07800" opacity="0.65" transform="rotate(15 68 48)"/>
           <ellipse cx="36" cy="76" rx="5" ry="3.5" fill="#c09200" opacity="0.6" transform="rotate(5 36 76)"/>
-
-          {/* ── Emboss ring dalam ── */}
           <circle cx="41" cy="41" r="26" fill="none" stroke="rgba(90,30,5,0.3)" strokeWidth="1.2"/>
           <circle cx="41" cy="41" r="20" fill="none" stroke="rgba(90,30,5,0.2)" strokeWidth="0.8"/>
-
-          {/* ── Motif daun di dalam stamp ── */}
           <g opacity="0.82">
-            {/* Batang */}
             <path d="M41 18 L41 54" stroke="rgba(70,20,5,0.55)" strokeWidth="1"/>
-            {/* Daun kiri */}
-            <path d="M41 28 C36 24 30 23 27 25 C28 29 33 32 41 32 Z"
-              fill="rgba(70,20,5,0.38)" stroke="rgba(70,20,5,0.25)" strokeWidth="0.6"/>
-            <path d="M41 36 C35 32 28 32 25 34 C27 38 33 40 41 40 Z"
-              fill="rgba(70,20,5,0.35)" stroke="rgba(70,20,5,0.22)" strokeWidth="0.6"/>
-            {/* Daun kanan */}
-            <path d="M41 28 C46 24 52 23 55 25 C54 29 49 32 41 32 Z"
-              fill="rgba(70,20,5,0.38)" stroke="rgba(70,20,5,0.25)" strokeWidth="0.6"/>
-            <path d="M41 36 C47 32 54 32 57 34 C55 38 49 40 41 40 Z"
-              fill="rgba(70,20,5,0.35)" stroke="rgba(70,20,5,0.22)" strokeWidth="0.6"/>
-            {/* Ujung bawah daun */}
-            <path d="M41 46 C39 50 38 53 41 55 C44 53 43 50 41 46 Z"
-              fill="rgba(70,20,5,0.32)" stroke="rgba(70,20,5,0.2)" strokeWidth="0.5"/>
+            <path d="M41 28 C36 24 30 23 27 25 C28 29 33 32 41 32 Z" fill="rgba(70,20,5,0.38)" stroke="rgba(70,20,5,0.25)" strokeWidth="0.6"/>
+            <path d="M41 36 C35 32 28 32 25 34 C27 38 33 40 41 40 Z" fill="rgba(70,20,5,0.35)" stroke="rgba(70,20,5,0.22)" strokeWidth="0.6"/>
+            <path d="M41 28 C46 24 52 23 55 25 C54 29 49 32 41 32 Z" fill="rgba(70,20,5,0.38)" stroke="rgba(70,20,5,0.25)" strokeWidth="0.6"/>
+            <path d="M41 36 C47 32 54 32 57 34 C55 38 49 40 41 40 Z" fill="rgba(70,20,5,0.35)" stroke="rgba(70,20,5,0.22)" strokeWidth="0.6"/>
+            <path d="M41 46 C39 50 38 53 41 55 C44 53 43 50 41 46 Z" fill="rgba(70,20,5,0.32)" stroke="rgba(70,20,5,0.2)" strokeWidth="0.5"/>
           </g>
         </svg>
       </motion.div>
-
-      {/* Hint ring pulse saat idle */}
       {isIdle && (
         <>
           <motion.div className="absolute inset-0 rounded-full pointer-events-none"
             style={{ border: '1.5px solid rgba(200,152,10,0.45)' }}
             animate={{ scale: [1, 1.55, 1], opacity: [0.5, 0, 0.5] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-          />
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}/>
           <motion.div className="absolute inset-0 rounded-full pointer-events-none"
             style={{ border: '1px solid rgba(200,152,10,0.28)' }}
             animate={{ scale: [1, 1.9, 1], opacity: [0.35, 0, 0.35] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
-          />
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}/>
         </>
       )}
-
-      {/* Shimmer saat idle */}
       {isIdle && (
         <div className="absolute rounded-full overflow-hidden pointer-events-none"
           style={{ width: 74, height: 74, borderRadius: '50%' }}>
           <motion.div className="absolute inset-y-0 w-8"
             style={{ background: 'linear-gradient(to right,transparent,rgba(255,255,255,0.38),transparent)' }}
             animate={{ x: ['-200%', '320%'] }}
-            transition={{ duration: 3, repeat: Infinity, repeatDelay: 3.2, ease: 'easeInOut' }}
-          />
+            transition={{ duration: 3, repeat: Infinity, repeatDelay: 3.2, ease: 'easeInOut' }}/>
         </div>
       )}
     </div>
   );
 }
 
-// ─── Bokeh ────────────────────────────────────────────────────────
 function Bokeh() {
   const d = [
     { l:'7%',  t:'16%', s:95,  c:'var(--sage-pale)',  o:0.4, delay:0   },
@@ -246,28 +157,39 @@ function Bokeh() {
         <motion.div key={i} className="absolute rounded-full"
           style={{ left:b.l, top:b.t, width:b.s, height:b.s, background:b.c, opacity:b.o, filter:'blur(32px)' }}
           animate={{ scale:[1,1.2,1], opacity:[b.o, b.o*0.55, b.o] }}
-          transition={{ duration:5.5+i*0.5, repeat:Infinity, ease:'easeInOut', delay:b.delay }}
-        />
+          transition={{ duration:5.5+i*0.5, repeat:Infinity, ease:'easeInOut', delay:b.delay }}/>
       ))}
     </div>
   );
 }
 
-// ─── Main ─────────────────────────────────────────────────────────
 export default function OpeningGate() {
   const [phase, setPhase] = useState<Phase>('idle');
+
+  useEffect(() => {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
+  }, []);
 
   const go = () => {
     if (phase !== 'idle') return;
     setPhase('seal-break');
     setTimeout(() => setPhase('flap-open'),   720);
     setTimeout(() => setPhase('card-rise'),   720 + 1050);
-    setTimeout(() => setPhase('card-expand'), 720 + 1050 + 1000);
+    setTimeout(() => setPhase('card-expand'), 720 + 1050 + 1800);
     setTimeout(() => {
       setPhase('gone');
+      document.body.style.overflow = '';
       const m = document.getElementById('main-content');
       if (m) { m.style.opacity = '1'; m.style.pointerEvents = 'auto'; }
-    }, 720 + 1050 + 1000 + 950);
+      const nav = document.getElementById('navbar-wrapper');
+      if (nav) { nav.style.opacity = '1'; nav.style.pointerEvents = 'auto'; }
+    }, 720 + 1050 + 1800 + 1800);
   };
 
   const flapOpen   = ['flap-open','card-rise','card-expand'].includes(phase);
@@ -279,7 +201,7 @@ export default function OpeningGate() {
       {phase !== 'gone' && (
         <motion.div
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden"
-          style={{ background: 'linear-gradient(145deg,#eef5ee 0%,#f4f8f4 45%,#eaf2eb 100%)' }}
+          style={{ background: 'linear-gradient(145deg,#eef5ee 0%,#f4f8f4 45%,#eaf2eb 100%)', overflowX: 'hidden' }}
           exit={{ opacity: 0, transition: { duration: 1.1 } }}
         >
           <Bokeh/>
@@ -294,95 +216,64 @@ export default function OpeningGate() {
             </div>
           </div>
 
-          {/* Corner top — FloTop dengan animasi melayang */}
-          {[
-            {
-              pos: '-top-16 -left-16',
-              flip: false, delay: 0, floatDelay: 0,
-              // Edit ukuran per device di sini:
-              className: 'w-36 h-36 sm:w-44 sm:h-44 md:w-56 md:h-56 lg:w-64 lg:h-64',
-            },
-            {
-              pos: '-top-16 -right-16',
-              flip: true, delay: 0.1, floatDelay: 0.8,
-              // Edit ukuran per device di sini:
-              className: 'w-36 h-36 sm:w-44 sm:h-44 md:w-56 md:h-56 lg:w-64 lg:h-64',
-            },
-          ].map((l, i) => (
-            <motion.div key={i} className={`absolute ${l.pos} pointer-events-none`}
-              initial={{ opacity:0 }} animate={{ opacity:1 }}
-              transition={{ delay: 0.4 + l.delay, duration:0.9 }}>
-              <motion.div
-                animate={{ y:[0,-10,0], rotate: l.flip ? [3,-3,3] : [-3,3,-3] }}
-                transition={{ duration:5+i, repeat:Infinity, ease:'easeInOut', delay:l.floatDelay }}>
-                <FloTop opacity={0.82} flip={l.flip} className={l.className}/>
-              </motion.div>
+          {/* Corner flowers — absolute di dalam gate */}
+          <div className="absolute top-0 left-0 pointer-events-none">
+            <motion.div animate={{ y:[0,-10,0], rotate:[-3,3,-3] }}
+              transition={{ duration:5, repeat:Infinity, ease:'easeInOut' }}>
+              <FloTop opacity={0.85}
+                className="w-36 sm:w-44 md:w-56 lg:w-64"
+                style={{ aspectRatio:'1/1', height:'auto' }}/>
             </motion.div>
-          ))}
-
-          {/* Corner bottom — FloBot dengan animasi melayang */}
-          {[
-            {
-              pos: '-bottom-16 -left-16',
-              flip: false, delay: 0.2, floatDelay: 1.2,
-              // Edit ukuran per device di sini:
-              className: 'w-32 h-32 sm:w-40 sm:h-40 md:w-52 md:h-52 lg:w-60 lg:h-60',
-            },
-            {
-              pos: '-bottom-16 -right-16',
-              flip: true, delay: 0.3, floatDelay: 0.4,
-              // Edit ukuran per device di sini:
-              className: 'w-32 h-32 sm:w-40 sm:h-40 md:w-52 md:h-52 lg:w-60 lg:h-60',
-            },
-          ].map((l, i) => (
-            <motion.div key={i} className={`absolute ${l.pos} pointer-events-none`}
-              initial={{ opacity:0 }} animate={{ opacity:1 }}
-              transition={{ delay: 0.6 + l.delay, duration:0.9 }}>
-              <motion.div
-                animate={{ y:[0,-8,0], rotate: l.flip ? [-2,2,-2] : [2,-2,2] }}
-                transition={{ duration:6+i, repeat:Infinity, ease:'easeInOut', delay:l.floatDelay }}>
-                <FloBot opacity={0.85} flip={l.flip} className={l.className}/>
-              </motion.div>
-            </motion.div>
-          ))}
-
-          {/* Splatter dekoratif */}
-          <div className="absolute top-14 right-[17%] pointer-events-none opacity-22">
-            <WcSplatter size={86} color="var(--sage-light)" opacity={1}/>
           </div>
-          <div className="absolute bottom-16 left-[14%] pointer-events-none opacity-18">
-            <WcSplatter size={70} color="var(--petal)" opacity={1}/>
+          <div className="absolute top-0 right-0 pointer-events-none">
+            <motion.div animate={{ y:[0,-10,0], rotate:[3,-3,3] }}
+              transition={{ duration:6, repeat:Infinity, ease:'easeInOut', delay:0.8 }}>
+              <FloTop flip opacity={0.85}
+                className="w-36 sm:w-44 md:w-56 lg:w-64"
+                style={{ aspectRatio:'1/1', height:'auto' }}/>
+            </motion.div>
+          </div>
+          <div className="absolute bottom-0 left-0 pointer-events-none">
+            <motion.div animate={{ y:[0,-8,0], rotate:[2,-2,2] }}
+              transition={{ duration:6, repeat:Infinity, ease:'easeInOut', delay:1.2 }}>
+              <FloBot opacity={0.85}
+                className="w-32 sm:w-40 md:w-52 lg:w-60"
+                style={{ aspectRatio:'1/1', height:'auto' }}/>
+            </motion.div>
+          </div>
+          <div className="absolute bottom-0 right-0 pointer-events-none">
+            <motion.div animate={{ y:[0,-8,0], rotate:[-2,2,-2] }}
+              transition={{ duration:7, repeat:Infinity, ease:'easeInOut', delay:0.4 }}>
+              <FloBot flip opacity={0.85}
+                className="w-32 sm:w-40 md:w-52 lg:w-60"
+                style={{ aspectRatio:'1/1', height:'auto' }}/>
+            </motion.div>
           </div>
 
-          {/* ══════════════════════════════════════════════════
-              LAYOUT: judul atas + amplop
-          ══════════════════════════════════════════════════ */}
           <div className="relative flex flex-col items-center" style={{ zIndex: 10 }}>
 
-            {/* ── JUDUL DI ATAS AMPLOP ── */}
             <AnimatePresence>
               {phase === 'idle' && (
                 <motion.div key="title"
-                  className="text-center mb-8"
+                  className="text-center mb-8 px-4 w-screen"
+                  style={{ maxWidth: '100vw' }}
                   initial={{ opacity:0, y:22 }}
                   animate={{ opacity:1, y:0 }}
                   exit={{ opacity:0, y:-10, transition:{ duration:0.22 } }}
-                  transition={{ delay:0.3, duration:0.9 }}
-                >
-                  <motion.p className="text-xs tracking-[0.45em] uppercase mb-3"
+                  transition={{ delay:0.3, duration:0.9 }}>
+                  <motion.p className="text-xs tracking-[0.35em] uppercase mb-3"
                     style={{ color:'var(--text-muted)', fontFamily:'var(--font-sans)' }}
                     initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.42 }}>
                     Sebuah Undangan Istimewa
                   </motion.p>
-
                   <motion.h1
-                    style={{ fontFamily:'var(--font-script)', fontSize:'clamp(2.8rem,8.5vw,4.8rem)', color:'var(--moss-dark)', lineHeight:1.1 }}
+                    style={{ fontFamily:'var(--font-script)', fontSize:'clamp(2.2rem,7vw,4.2rem)', color:'var(--moss-dark)', lineHeight:1.1 }}
                     initial={{ opacity:0, y:22, filter:'blur(6px)' }}
                     animate={{ opacity:1, y:0, filter:'blur(0px)' }}
                     transition={{ delay:0.52, duration:1, ease:[0.16,1,0.3,1] }}>
                     {weddingConfig.groom.nickname}
                     <motion.span
-                      className="inline-block mx-3 italic"
+                      className="inline-block mx-2 italic"
                       style={{ fontFamily:'var(--font-display)', fontSize:'58%', color:'var(--sage)', verticalAlign:'middle' }}
                       initial={{ opacity:0, scale:0.3 }}
                       animate={{ opacity:1, scale:1 }}
@@ -391,42 +282,39 @@ export default function OpeningGate() {
                     </motion.span>
                     {weddingConfig.bride.nickname}
                   </motion.h1>
-
                   <motion.div className="flex justify-center mt-2"
                     initial={{ scaleX:0, opacity:0 }} animate={{ scaleX:1, opacity:1 }}
                     transition={{ delay:0.98, duration:0.8 }}>
-                    <WcBrushStroke width={250} color="var(--sage)" opacity={0.5}/>
+                    <WcBrushStroke width={160} color="var(--sage)" opacity={0.5}/>
                   </motion.div>
-
                   <motion.p className="mt-2.5 text-sm italic"
                     style={{ color:'var(--text-muted)', fontFamily:'var(--font-body)' }}
                     initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:1.08 }}>
                     Mengundang kehadiran Anda di hari bahagia kami
                   </motion.p>
-
                   <motion.div className="flex justify-center mt-3"
                     initial={{ scaleX:0, opacity:0 }} animate={{ scaleX:1, opacity:1 }}
                     transition={{ delay:1.18, duration:0.8 }}>
-                    <WcBranchRow width={230} color="var(--sage)"/>
+                    <WcBranchRow width={180} color="var(--sage)"/>
                   </motion.div>
-
                   <motion.p className="mt-3 text-xs tracking-[0.28em] uppercase"
                     style={{ color:'var(--sage)', fontFamily:'var(--font-sans)' }}
-                    initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:1.35 }}
-                    // Subtle pulse untuk menarik perhatian ke seal
-                  >
+                    initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:1.35 }}>
                     ↓ &nbsp; klik seal untuk membuka &nbsp; ↓
                   </motion.p>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* ══════════════════════════════════════
-                AMPLOP WRAPPER
-            ══════════════════════════════════════ */}
             <motion.div
               className="relative"
-              style={{ width: ENV_W, height: ENV_H }}
+              style={{
+                width: ENV_W,
+                height: ENV_H,
+                /* Scale down di mobile — max lebar layar dikurangi margin */
+                transform: `scale(min(1, calc((100vw - 32px) / ${ENV_W})))`,
+                transformOrigin: 'top center',
+              }}
               animate={
                 phase === 'idle'
                   ? { y:[0,-8,0], rotate:[-0.5,0.5,-0.5] }
@@ -436,54 +324,23 @@ export default function OpeningGate() {
               }
               transition={ phase === 'idle' ? { duration:4.5, repeat:Infinity, ease:'easeInOut' } : {} }
             >
-
-              {/* ── KARTU UNDANGAN ── */}
               <AnimatePresence>
                 {cardRising && (
                   <motion.div key="card"
                     style={{
-                      position: 'absolute',
-                      width: 262,
-                      left: (ENV_W - 262) / 2,
-                      zIndex: 8,
-                      background: 'linear-gradient(165deg,#faf7f0 0%,#f2ead8 100%)',
-                      border: '1px solid rgba(180,155,100,0.26)',
-                      borderRadius: '0.9rem',
-                      boxShadow: '0 10px 38px rgba(44,62,45,0.18)',
-                      overflow: 'hidden',
+                      position: 'absolute', width: 262, left: (ENV_W - 262) / 2,
+                      zIndex: 8, background: 'linear-gradient(165deg,#faf7f0 0%,#f2ead8 100%)',
+                      border: '1px solid rgba(180,155,100,0.26)', borderRadius: '0.9rem',
+                      boxShadow: '0 10px 38px rgba(44,62,45,0.18)', overflow: 'hidden',
                       transformOrigin: 'center center',
                     }}
-                    initial={{
-                      top: ENV_H * 0.18,  /* mulai di dalam amplop */
-                      y: ENV_H * 0.3,     /* tersembunyi di bawah */
-                      opacity: 0,
-                      scaleY: 0.35,
-                      scaleX: 0.85,
-                    }}
+                    initial={{ top: ENV_H * 0.18, y: ENV_H * 0.3, opacity: 0, scaleY: 0.35, scaleX: 0.85 }}
                     animate={
                       cardExpand
-                        ? {
-                            /*
-                              Zoom fade dari tengah ke fullscreen.
-                              Kita pindah kartu ke fixed overlay terpisah setelah expand
-                              sehingga tetap di tengah viewport
-                            */
-                            top: ENV_H * 0.18,
-                            y: -(ENV_H * 0.68),
-                            scaleX: 1, scaleY: 1,
-                            opacity: 1,
-                          }
-                        : {
-                            top: ENV_H * 0.18,
-                            y: -(ENV_H * 0.68),
-                            opacity: 1,
-                            scaleY: 1,
-                            scaleX: 1,
-                          }
+                        ? { top: ENV_H * 0.18, y: -(ENV_H * 0.68), scaleX: 1, scaleY: 1, opacity: 1 }
+                        : { top: ENV_H * 0.18, y: -(ENV_H * 0.68), opacity: 1, scaleY: 1, scaleX: 1 }
                     }
-                    transition={{ duration:0.82, ease:[0.16,1,0.3,1] }}
-                  >
-                    {/* grain */}
+                    transition={{ duration:0.82, ease:[0.16,1,0.3,1] }}>
                     <div className="absolute inset-0 pointer-events-none opacity-[0.14]"
                       style={{ backgroundImage:'repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(150,118,70,0.07) 3px,rgba(150,118,70,0.07) 4px)' }}/>
                     <div className="relative p-7 text-center">
@@ -527,65 +384,41 @@ export default function OpeningGate() {
                 )}
               </AnimatePresence>
 
-              {/* Shadow CSS oval */}
               <div className="absolute inset-0 pointer-events-none" style={{
                 borderRadius: '9px',
                 boxShadow: '0 16px 40px rgba(8,14,2,0.4), 0 6px 16px rgba(8,14,2,0.2)',
               }}/>
 
-              {/* ── AMPLOP SVG BODY ── */}
               <svg className="absolute inset-0 pointer-events-none"
-                width={ENV_W} height={ENV_H}
-                viewBox={`0 0 ${ENV_W} ${ENV_H}`}
+                width={ENV_W} height={ENV_H} viewBox={`0 0 ${ENV_W} ${ENV_H}`}
                 fill="none" style={{ zIndex:3, overflow:'visible' }}>
                 <defs>
                   <clipPath id="envClip">
                     <rect x="0" y="0" width={ENV_W} height={ENV_H} rx="9"/>
                   </clipPath>
                 </defs>
-
-                {/* Body center — paling terang, ini bagian dalam amplop */}
                 <rect x="0" y="0" width={ENV_W} height={ENV_H} rx="9" fill="#7e9028"/>
-
-                {/* Lipatan kiri — lebih gelap, ini sisi luar */}
-                <path d={`M0 0 L${ENV_CX} ${ENV_H*0.58} L0 ${ENV_H} Z`}
-                  fill="#5a6a18" clipPath="url(#envClip)"/>
-
-                {/* Lipatan kanan — lebih gelap, sisi luar */}
-                <path d={`M${ENV_W} 0 L${ENV_CX} ${ENV_H*0.58} L${ENV_W} ${ENV_H} Z`}
-                  fill="#627218" clipPath="url(#envClip)"/>
-
-                {/* Lipatan bawah — paling gelap */}
-                <path d={`M0 ${ENV_H} L${ENV_CX} ${ENV_H*0.65} L${ENV_W} ${ENV_H} Z`}
-                  fill="#4e5e14" clipPath="url(#envClip)"/>
-
-                {/* Garis lipatan — visible tapi halus */}
+                <path d={`M0 0 L${ENV_CX} ${ENV_H*0.58} L0 ${ENV_H} Z`} fill="#5a6a18" clipPath="url(#envClip)"/>
+                <path d={`M${ENV_W} 0 L${ENV_CX} ${ENV_H*0.58} L${ENV_W} ${ENV_H} Z`} fill="#627218" clipPath="url(#envClip)"/>
+                <path d={`M0 ${ENV_H} L${ENV_CX} ${ENV_H*0.65} L${ENV_W} ${ENV_H} Z`} fill="#4e5e14" clipPath="url(#envClip)"/>
                 <line x1="0" y1="0" x2={ENV_CX} y2={ENV_H*0.58} stroke="rgba(30,40,5,0.35)" strokeWidth="0.8"/>
                 <line x1={ENV_W} y1="0" x2={ENV_CX} y2={ENV_H*0.58} stroke="rgba(30,40,5,0.35)" strokeWidth="0.8"/>
                 <line x1="0" y1={ENV_H} x2={ENV_CX} y2={ENV_H*0.65} stroke="rgba(30,40,5,0.3)" strokeWidth="0.7"/>
                 <line x1={ENV_W} y1={ENV_H} x2={ENV_CX} y2={ENV_H*0.65} stroke="rgba(30,40,5,0.3)" strokeWidth="0.7"/>
-
-                {/* Border */}
-                <rect x="0" y="0" width={ENV_W} height={ENV_H} rx="9"
-                  fill="none" stroke="rgba(40,55,8,0.3)" strokeWidth="1"/>
+                <rect x="0" y="0" width={ENV_W} height={ENV_H} rx="9" fill="none" stroke="rgba(40,55,8,0.3)" strokeWidth="1"/>
               </svg>
 
-              {/* ── TOP FLAP (CSS 3D) ── */}
               <div className="absolute inset-x-0 pointer-events-none"
                 style={{ top:0, height: FLAP_TIP+14, zIndex: flapOpen ? 2 : 5, perspective:'800px' }}>
                 <svg width={ENV_W} height={FLAP_TIP+14}
                   viewBox={`0 0 ${ENV_W} ${FLAP_TIP+14}`} fill="none"
                   style={{
-                    display:'block',
-                    transformOrigin:'center top',
+                    display:'block', transformOrigin:'center top',
                     transform:`rotateX(${flapOpen ? -180 : 0}deg)`,
                     transition:'transform 0.95s cubic-bezier(0.76,0,0.24,1)',
                   }}>
-                  {/* Flap — lebih gelap dari body center, ini bagian luar */}
                   <path d={`M0 0 L${ENV_W} 0 L${ENV_CX} ${FLAP_TIP} Z`} fill="#566016"/>
-                  {/* Gradient terang di atas, gelap di bawah */}
-                  <path d={`M0 0 L${ENV_W} 0 L${ENV_CX} ${FLAP_TIP} Z`}
-                    fill="url(#flapShade)"/>
+                  <path d={`M0 0 L${ENV_W} 0 L${ENV_CX} ${FLAP_TIP} Z`} fill="url(#flapShade)"/>
                   <defs>
                     <linearGradient id="flapShade" x1="0.5" y1="0" x2="0.5" y2="1">
                       <stop offset="0%"   stopColor="#8a9e2a" stopOpacity="0.3"/>
@@ -597,52 +430,29 @@ export default function OpeningGate() {
                 </svg>
               </div>
 
-              {/* ── WAX STAMP — clickable ── */}
               <div className="absolute"
-                style={{
-                  top: FLAP_TIP - 41,
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  zIndex: flapOpen ? 1 : 7,
-                }}>
+                style={{ top: FLAP_TIP - 41, left: '50%', transform: 'translateX(-50%)', zIndex: flapOpen ? 1 : 7 }}>
                 <WaxStamp phase={phase} onClick={go}/>
               </div>
 
-            </motion.div>{/* end amplop wrapper */}
+            </motion.div>
+          </div>
 
-          </div>{/* end layout */}
-
-          {/* ══════════════════════════════════════════════════
-              OVERLAY EXPAND — full screen zoom fade dari tengah
-              Dirender sebagai fixed overlay terpisah dari amplop
-              agar selalu di tengah viewport dengan benar
-          ══════════════════════════════════════════════════ */}
           <AnimatePresence>
             {cardExpand && (
               <motion.div key="expand-overlay"
                 className="fixed inset-0 flex items-center justify-center overflow-hidden"
                 style={{ zIndex: 9998 }}
-                initial={{ opacity:0 }}
-                animate={{ opacity:1 }}
-                exit={{ opacity:0 }}
-                transition={{ duration:0.4 }}
-              >
-                {/* Fullscreen card — zoom dari scale kecil ke penuh */}
+                initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
+                transition={{ duration:0.4 }}>
                 <motion.div
                   className="absolute overflow-hidden"
-                  style={{
-                    background: 'linear-gradient(165deg,#faf7f0 0%,#f2ead8 100%)',
-                    transformOrigin: 'center center',
-                  }}
+                  style={{ background: 'linear-gradient(165deg,#faf7f0 0%,#f2ead8 100%)', transformOrigin: 'center center' }}
                   initial={{ width:'270px', height:'auto', borderRadius:'0.9rem', scale:0.5, opacity:0 }}
                   animate={{ width:'100vw', height:'100vh', borderRadius:'0px', scale:1, opacity:1 }}
-                  transition={{ duration:0.85, ease:[0.16,1,0.3,1] }}
-                >
-                  {/* grain */}
+                  transition={{ duration:0.85, ease:[0.16,1,0.3,1] }}>
                   <div className="absolute inset-0 pointer-events-none opacity-[0.12]"
                     style={{ backgroundImage:'repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(150,118,70,0.07) 3px,rgba(150,118,70,0.07) 4px)' }}/>
-
-                  {/* watercolor blob di dalam */}
                   <div className="absolute inset-0 pointer-events-none">
                     <div className="absolute -top-20 -left-20 opacity-30">
                       <WcBlob size={400} color="var(--sage-pale)" opacity={0.8}/>
@@ -651,25 +461,20 @@ export default function OpeningGate() {
                       <WcBlob size={380} color="var(--petal)" opacity={0.8} rotate={20}/>
                     </div>
                   </div>
-
-                  {/* Konten kartu di tengah */}
                   <div className="relative h-full flex flex-col items-center justify-center text-center px-8">
                     <motion.div initial={{ scale:0 }} animate={{ scale:1 }}
                       transition={{ delay:0.3, type:'spring', stiffness:130 }}>
                       <WcFlower size={52} color="var(--sage)" opacity={0.9}/>
                     </motion.div>
-
                     <motion.p className="text-xs tracking-[0.42em] uppercase mt-5 mb-1"
                       style={{ color:'var(--text-muted)', fontFamily:'var(--font-sans)' }}
                       initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.4 }}>
                       Undangan Pernikahan
                     </motion.p>
-
                     <motion.div className="flex justify-center mb-4"
                       initial={{ scaleX:0 }} animate={{ scaleX:1 }} transition={{ delay:0.48, duration:0.7 }}>
                       <WcBranchRow width={260} color="var(--sage)"/>
                     </motion.div>
-
                     <motion.h1
                       style={{ fontFamily:'var(--font-script)', fontSize:'clamp(3.5rem,10vw,7rem)', color:'var(--moss-dark)', lineHeight:1.1 }}
                       initial={{ opacity:0, y:28, filter:'blur(8px)' }}
@@ -677,14 +482,12 @@ export default function OpeningGate() {
                       transition={{ delay:0.56, duration:0.85, ease:[0.16,1,0.3,1] }}>
                       {weddingConfig.groom.nickname}
                     </motion.h1>
-
                     <motion.p className="text-3xl italic my-2"
                       style={{ fontFamily:'var(--font-display)', color:'var(--sage)' }}
                       initial={{ opacity:0, scale:0.4 }} animate={{ opacity:1, scale:1 }}
                       transition={{ delay:0.72, type:'spring', stiffness:140 }}>
                       &amp;
                     </motion.p>
-
                     <motion.h1
                       style={{ fontFamily:'var(--font-script)', fontSize:'clamp(3.5rem,10vw,7rem)', color:'var(--moss-dark)', lineHeight:1.1 }}
                       initial={{ opacity:0, y:28, filter:'blur(8px)' }}
@@ -692,7 +495,6 @@ export default function OpeningGate() {
                       transition={{ delay:0.84, duration:0.85, ease:[0.16,1,0.3,1] }}>
                       {weddingConfig.bride.nickname}
                     </motion.h1>
-
                     <motion.div className="flex justify-center mt-4"
                       initial={{ scaleX:0 }} animate={{ scaleX:1 }} transition={{ delay:0.96, duration:0.7 }}>
                       <WcBranchRow width={260} color="var(--sage)"/>

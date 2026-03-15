@@ -18,11 +18,11 @@ function TimelineItem({ item, index }: { item: typeof weddingConfig.story[0]; in
       transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className={`flex-1 ${isLeft ? 'text-right' : 'text-left'} md:max-w-[42%]`}>
-        <div className="wc-card p-6 relative overflow-hidden group">
+        <div className="wc-card p-6 relative  group">
           {/* Corner flower aksen */}
           <div className={`absolute top-2 ${isLeft ? 'right-2' : 'left-2'} opacity-40 pointer-events-none`}>
             <FlorFour
-              style={{ width: 'clamp(28px, 4vw, 44px)', aspectRatio: '1/1', height: 'auto' }}
+              className="w-7 sm:w-9 md:w-11" style={{ aspectRatio:'1/1', height:'auto' }}
               rotate={isLeft ? 30 : -30}
             />
           </div>
@@ -74,20 +74,20 @@ export default function CoupleStory() {
   const lineH = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
 
   return (
-    <section id="story" ref={sectionRef} className="section-pad relative overflow-hidden"
+    <section id="story" ref={sectionRef} className="section-pad relative "
       style={{ background: 'var(--bg-2)' }}>
 
       {/* Corner PNG */}
       <div className="absolute top-0 right-0 pointer-events-none opacity-60">
         <FlorOne
-          style={{ width: 'clamp(120px, 18vw, 260px)', aspectRatio: '1/1', height: 'auto' }}
+          className="w-28 sm:w-40 md:w-52 lg:w-64" style={{ aspectRatio:'1/1', height:'auto' }}
           rotate={10}
         />
       </div>
       <div className="absolute bottom-0 left-0 pointer-events-none opacity-50">
         <FlorTwo
           flip
-          style={{ width: 'clamp(100px, 15vw, 220px)', aspectRatio: '1/1', height: 'auto' }}
+          className="w-24 sm:w-36 md:w-48 lg:w-56" style={{ aspectRatio:'1/1', height:'auto' }}
           rotate={-15}
         />
       </div>
@@ -99,7 +99,7 @@ export default function CoupleStory() {
           animate={titleInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}>
           <FloCrn
-            style={{ width: 'clamp(40px, 6vw, 64px)', aspectRatio: '1/1', height: 'auto', margin: '0 auto' }}
+            className="w-10 sm:w-12 md:w-14 lg:w-16" style={{ aspectRatio:'1/1', height:'auto', margin:'0 auto' }}
             opacity={0.85}
           />
           <p className="text-xs tracking-[0.35em] uppercase mt-4 mb-2"
@@ -117,7 +117,7 @@ export default function CoupleStory() {
 
         {/* Timeline */}
         <div className="relative">
-          <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 hidden md:block overflow-hidden"
+          <div className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 hidden md:block "
             style={{ background: 'var(--sage-pale)' }}>
             <motion.div className="w-full origin-top" style={{ height: lineH, background: 'var(--sage-light)' }} />
           </div>

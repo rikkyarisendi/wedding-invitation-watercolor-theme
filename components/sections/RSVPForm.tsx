@@ -42,20 +42,26 @@ export default function RSVPForm() {
   };
 
   return (
-    <section id="rsvp" className="section-pad relative overflow-hidden">
+    <section id="rsvp" className="section-pad relative ">
 
       {/* Corner PNG */}
       <div className="absolute -top-8 -left-8 pointer-events-none opacity-50">
         <FlorOne
-          style={{ width: 'clamp(90px, 12vw, 180px)', aspectRatio: '1/1', height: 'auto' }}
+          className="w-20 sm:w-28 md:w-36 lg:w-44" style={{ aspectRatio:'1/1', height:'auto' }}
           rotate={15}
         />
       </div>
-      <div className="absolute -bottom-8 -right-8 pointer-events-none opacity-45">
+      <div className="absolute -bottom-20 -right-8 pointer-events-none opacity-55" style={{ zIndex: 20 }}>
         <FlorFive
           flip
-          style={{ width: 'clamp(90px, 12vw, 180px)', aspectRatio: '1/1', height: 'auto' }}
+          className="w-28 sm:w-36 md:w-44 lg:w-52" style={{ aspectRatio:'1/1', height:'auto' }}
           rotate={-15}
+        />
+      </div>
+      <div className="absolute -bottom-20 -left-8 pointer-events-none opacity-45" style={{ zIndex: 20 }}>
+        <FlorOne
+          className="w-24 sm:w-32 md:w-40 lg:w-48" style={{ aspectRatio:'1/1', height:'auto' }}
+          rotate={10} flip
         />
       </div>
 
@@ -64,7 +70,7 @@ export default function RSVPForm() {
           initial={{ opacity: 0, y: 30 }} animate={titleInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}>
           <FloCrn
-            style={{ width: 'clamp(36px, 5vw, 52px)', aspectRatio: '1/1', height: 'auto', margin: '0 auto' }}
+            className="w-9 sm:w-11 md:w-12 lg:w-14" style={{ aspectRatio:'1/1', height:'auto', margin:'0 auto' }}
             opacity={0.85}
           />
           <p className="text-xs tracking-[0.35em] uppercase mt-4 mb-2"
@@ -85,11 +91,11 @@ export default function RSVPForm() {
             <motion.div key="success"
               initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }} transition={{ duration: 0.8, type: 'spring' }}
-              className="wc-card p-14 text-center relative overflow-hidden">
+              className="wc-card p-14 text-center relative ">
               {/* Corner flower success */}
               <div className="absolute top-3 right-3 opacity-30 pointer-events-none">
                 <FlorSeven
-                  style={{ width: 'clamp(32px, 4vw, 52px)', aspectRatio: '1/1', height: 'auto' }}
+                  className="w-8 sm:w-10 md:w-12 lg:w-14" style={{ aspectRatio:'1/1', height:'auto' }}
                   rotate={20}
                 />
               </div>
@@ -97,7 +103,7 @@ export default function RSVPForm() {
                 <motion.div className="flex justify-center mb-4"
                   animate={{ rotate: 360 }} transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}>
                   <FloCrn
-                    style={{ width: 'clamp(44px, 6vw, 64px)', aspectRatio: '1/1', height: 'auto', margin: '0 auto' }}
+                    className="w-10 sm:w-12 md:w-14 lg:w-16" style={{ aspectRatio:'1/1', height:'auto', margin:'0 auto' }}
                     opacity={0.9}
                   />
                 </motion.div>
@@ -111,14 +117,14 @@ export default function RSVPForm() {
               </div>
             </motion.div>
           ) : (
-            <motion.div key="form" ref={formRef} className="wc-card p-8 relative overflow-hidden"
+            <motion.div key="form" ref={formRef} className="wc-card p-8 relative "
               initial={{ opacity: 0, y: 40 }} animate={formInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
 
               {/* Corner flower form */}
               <div className="absolute top-3 right-3 opacity-25 pointer-events-none">
                 <FlorSeven
-                  style={{ width: 'clamp(28px, 3.5vw, 44px)', aspectRatio: '1/1', height: 'auto' }}
+                  className="w-7 sm:w-9 md:w-10 lg:w-11" style={{ aspectRatio:'1/1', height:'auto' }}
                   rotate={25}
                 />
               </div>
@@ -158,7 +164,7 @@ export default function RSVPForm() {
                     <motion.div key="guests"
                       initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4 }}
-                      className="overflow-hidden">
+                      className="">
                       <label style={labelStyle}>Jumlah Tamu</label>
                       <select value={form.guests} onChange={(e) => set('guests', Number(e.target.value))} style={inputStyle}>
                         {[1,2,3,4].map((n) => (

@@ -17,16 +17,16 @@ export function Gallery() {
   const sizes  = ['row-span-2','','','row-span-2','',''];
 
   return (
-    <section id="gallery" className="section-pad relative overflow-hidden"
+    <section id="gallery" className="section-pad relative "
       style={{ background: 'var(--bg-2)' }}>
       <div className="absolute top-0 right-0 pointer-events-none opacity-60" style={{ transform: 'translate(20%,-10%)' }}>
-        <FlorOne style={{ width: 'clamp(100px, 14vw, 200px)', aspectRatio: '1/1', height: 'auto' }} opacity={0.4} rotate={15} />
+        <FlorOne className="w-24 sm:w-36 md:w-48 lg:w-52" style={{ aspectRatio:'1/1', height:'auto' }} opacity={0.4} rotate={15} />
       </div>
       <div className="max-w-6xl mx-auto relative">
         <motion.div ref={titleRef} className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }} animate={titleInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9 }}>
-          <FloCrn style={{ width: 'clamp(36px, 5vw, 52px)', aspectRatio: '1/1', height: 'auto', margin: '0 auto' }} opacity={0.85} />
+          <FloCrn className="w-9 sm:w-11 md:w-12 lg:w-14" style={{ aspectRatio:'1/1', height:'auto', margin:'0 auto' }} opacity={0.85} />
           <p className="text-xs tracking-[0.35em] uppercase mt-4 mb-2"
             style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-sans)' }}>
             Momen Berharga
@@ -44,7 +44,7 @@ export function Gallery() {
             const inView = useInView(ref, { once: true, margin: '-40px' });
             return (
               <motion.div key={index} ref={ref}
-                className={`relative cursor-pointer overflow-hidden group ${sizes[index] ?? ''}`}
+                className={`relative cursor-pointer  group ${sizes[index] ?? ''}`}
                 style={{ borderRadius: '1rem' }}
                 initial={{ opacity: 0, scale: 0.9, filter: 'blur(6px)' }}
                 animate={inView ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : {}}
