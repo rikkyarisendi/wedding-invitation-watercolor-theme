@@ -9,7 +9,7 @@ export const weddingConfig = {
     nickname:   'Dinda',
     fullName:   'Dinda Intan Pratiwi',
     parents:    'Putri dari Bapak Juwari & Ibu Khusnul Khotimah',
-    photo:      '/images/pas-foto-dinda-2.png',
+    photo:      '/images/dinda.png',
     instagram:  '@dindaip',
   },
   groom: {
@@ -17,7 +17,7 @@ export const weddingConfig = {
     nickname:   'Rikky',
     fullName:   'Rikky Arisendi',
     parents:    'Putra dari Bapak Sopandi & Ibu Yani Mulyani',
-    photo:      '/images/pas-foto-rikky-2.png',
+    photo:      '/images/rikky.png',
     instagram:  '@rikkyarisendi',
   },
 
@@ -79,12 +79,12 @@ export const weddingConfig = {
 
   // ---------- GALLERY ----------
   gallery: [
-    { src: '/images/gallery-1.jpg', alt: 'Momen prewedding di taman' },
-    { src: '/images/gallery-2.jpg', alt: 'Sunset bersama' },
-    { src: '/images/gallery-3.jpg', alt: 'Lamaran' },
-    { src: '/images/gallery-4.jpg', alt: 'Perjalanan ke Bali' },
-    { src: '/images/gallery-5.jpg', alt: 'Momen spesial' },
-    { src: '/images/gallery-6.jpg', alt: 'Prewedding outdoor' },
+    { src: '/images/gallery-1.png', alt: 'Momen prewedding di taman' },
+    { src: '/images/gallery-2.png', alt: 'Sunset bersama' },
+    { src: '/images/gallery-3.png', alt: 'Lamaran' },
+    { src: '/images/gallery-4.png', alt: 'Perjalanan ke Bali' },
+    { src: '/images/gallery-5.png', alt: 'Momen spesial' },
+    { src: '/images/gallery-6.png', alt: 'Prewedding outdoor' },
   ],
 
   // ---------- MUSIC ----------

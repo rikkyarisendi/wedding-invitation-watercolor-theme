@@ -32,10 +32,10 @@ export default function HeroSection() {
       {/* ── Background image ── */}
       <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <div className="hidden sm:block absolute inset-0">
-          <Image src="/images/hero-bg.jpg" alt="Hero" fill className="object-cover" priority />
+          <Image src="/images/hero-bg.jpeg" alt="Hero" fill className="object-cover opacity-50" priority />
         </div>
         <div className="block sm:hidden absolute inset-0">
-          <Image src="/images/hero-bg-mobile.jpg" alt="Hero" fill className="object-cover object-top" priority />
+          <Image src="/images/hero-bg-mobile.jpeg" alt="Hero" fill className="object-cover object-top opacity-50" priority />
         </div>
         <div className="absolute inset-0"
           style={{ background: 'linear-gradient(to bottom, rgba(238,245,238,0.55) 0%, rgba(212,232,213,0.45) 40%, var(--bg) 100%)' }}/>
